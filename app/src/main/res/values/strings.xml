@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">BookBook</string>
+
+    <string name="hint_search_book_title">책 제목을 입력하세요.</string>
+    <string name="format_sale_price">%,d원</string>
+    <string name="title_book_detail">책 설명</string>
+    <string name="title_book_info">책 정보</string>
+
+    <string name="title_publisher">발행인</string>
+    <string name="title_datetime">발행일</string>
+    <string name="title_isbn">ISBN</string>
+
+    <string name="default_search_keyword">카카오</string>
+
+    <string name="network_message_welcome_title">환영합니다.</string>
+    <string name="network_message_welcome_message">검색어를 입력해주세요.</string>
+
+    <string name="message_network_error">네트워크 연결상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.</string>
+    <string name="message_empty_book_list">검색 결과가 없습니다.</string>
+
+    <string name="retry">다시 시도</string>
+</resources>
