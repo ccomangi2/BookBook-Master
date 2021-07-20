@@ -4,7 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="viewModel"
+            type="com.example.bookbook_master.viewmodel.SearchViewModel" />
 
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -12,11 +18,13 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:focusableInTouchMode="true"
-        tools:context=".ui.search.SearchFragment">
+        android:background="@color/white"
+        tools:context=".view.fragment.SearchFragment">
 
         <include
             android:id="@+id/layout_toolbar_search"
-            layout="@layout/layout_toolbar_search" />
+            layout="@layout/layout_toolbar_search"
+            app:viewModel="@{viewModel}"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_book_list"
@@ -28,7 +36,7 @@
             android:paddingBottom="4dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:listitem="@layout/item_book" />
+            tools:listitem="@layout/item_text_type_book" />
 
         <androidx.appcompat.widget.AppCompatTextView
             style="@style/TextAppearance.AppCompat.Medium"
@@ -36,14 +44,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/message_empty_book_list"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:visibleOrGone="@{viewModel.isEmptyBookList}" />
 
         <androidx.core.widget.ContentLoadingProgressBar
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:indeterminateTint="@color/colorPoint" />
+            android:indeterminateTint="@color/colorPoint"
+            app:isShowLoading="@{viewModel.isShowLoading}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

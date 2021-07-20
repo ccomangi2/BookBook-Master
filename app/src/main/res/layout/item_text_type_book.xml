@@ -7,11 +7,11 @@
 
         <variable
             name="document"
-            type="com.mybooks.app.data.Document" />
+            type="com.example.bookbook_master.model.data.Document" />
 
         <variable
             name="bookClickListener"
-            type="com.mybooks.app.adapter.callback.OnBookClickListener" />
+            type="com.example.bookbook_master.adapter.callback.OnBookClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -21,12 +21,14 @@
         android:layout_marginTop="4dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="4dp"
+        android:background="#D7E9EC"
         app:cardCornerRadius="5dp"
         app:cardElevation="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#D7E9EC"
             android:foreground="?android:attr/selectableItemBackground"
             android:onClick="@{() -> bookClickListener.onClickBook(document)}">
 
@@ -57,6 +59,8 @@
                 android:maxLines="2"
                 android:text="@{document.title}"
                 android:textStyle="bold"
+                android:fontFamily="@font/medium"
+                android:textColor="#000000"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

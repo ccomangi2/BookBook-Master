@@ -18,5 +18,5 @@
     <string name="message_network_error">네트워크 연결상태가 좋지 않습니다.\n잠시 후 다시 시도해주세요.</string>
     <string name="message_empty_book_list">검색 결과가 없습니다.</string>
 
-    <string name="retry">다시 시도</string>
+    <string name="btn_confirm">확인</string>
 </resources>

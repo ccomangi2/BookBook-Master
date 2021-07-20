@@ -4,7 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="viewModel"
+            type="com.example.bookbook_master.viewmodel.DetailViewModel" />
 
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <com.google.android.material.appbar.AppBarLayout
@@ -12,8 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:fitsSystemWindows="true"
-        android:theme="@style/Theme.BookBook.Splash.AppBarOverlay">
+        android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -21,14 +26,13 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             app:contentInsetStart="0dp"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/Theme.BookBook.Splash.PopupOverlay">
+            app:layout_scrollFlags="scroll|enterAlways">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize">
 
-                <ImageButton
+                <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/b_back"
                     android:layout_width="20dp"
                     android:layout_height="wrap_content"
@@ -41,7 +45,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/back" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_item_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -52,14 +56,15 @@
                     app:layout_constraintStart_toEndOf="@+id/b_back"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_book_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/light"
-                    android:text="소프트웨어 장인"
+                    tools:text="소프트웨어 장인"
                     android:textColor="#000000"
                     android:textSize="20sp"
+                    android:text="@{viewModel.document.title}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
