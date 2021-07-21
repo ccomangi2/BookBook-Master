@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="document"
             type="com.example.bookbook_master.model.data.Document" />
@@ -32,6 +31,21 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:onClick="@{() -> bookClickListener.onClickBook(document)}">
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_item_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="01"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:fontFamily="@font/medium"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_book_thumbnail" />
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_book_thumbnail"
                 android:layout_width="match_parent"
@@ -39,6 +53,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:src="@drawable/no_img"
                 app:imageUrl="@{document.thumbnail}"
                 app:layout_constraintDimensionRatio="h,120:178"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -50,20 +65,20 @@
                 style="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="8dp"
                 android:ellipsize="none"
+                android:fontFamily="@font/medium"
                 android:lines="2"
                 android:maxLines="2"
                 android:text="@{document.title}"
-                android:textStyle="bold"
-                android:fontFamily="@font/medium"
                 android:textColor="#000000"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_item_number"
                 app:layout_constraintTop_toBottomOf="@+id/iv_book_thumbnail"
                 tools:text="책 제목" />
 

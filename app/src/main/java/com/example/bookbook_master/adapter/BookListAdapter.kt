@@ -1,13 +1,18 @@
 package com.example.bookbook_master.adapter
 
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bookbook_master.R
 import com.example.bookbook_master.adapter.callback.BookListDiffCallback
 import com.example.bookbook_master.adapter.callback.OnBookClickListener
 import com.example.bookbook_master.adapter.viewholder.BookImageTypeViewHolder
 import com.example.bookbook_master.adapter.viewholder.BookTextTypeViewHolder
 import com.example.bookbook_master.model.data.Document
+import kotlinx.android.synthetic.main.item_text_type_book.view.*
 
 /**
  * 도서 리스트 어댑터
@@ -33,10 +38,12 @@ class BookListAdapter(var itemViewType: Int, private val bookClickListener: OnBo
         when (holder) {
             is BookTextTypeViewHolder -> {
                 holder.bind(getItem(position))
+                holder.item_number(position+1)
             }
 
             is BookImageTypeViewHolder -> {
                 holder.bind(getItem(position))
+                holder.item_number(position+1)
             }
         }
     }
@@ -44,5 +51,4 @@ class BookListAdapter(var itemViewType: Int, private val bookClickListener: OnBo
     override fun getItemViewType(position: Int): Int {
         return itemViewType
     }
-
 }

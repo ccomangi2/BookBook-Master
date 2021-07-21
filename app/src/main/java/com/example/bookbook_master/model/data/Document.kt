@@ -22,5 +22,6 @@ data class Document(
     @field:SerializedName("sale_price") val salePrice: Int,
     @field:SerializedName("thumbnail") val thumbnail: String,
     @field:SerializedName("status") val status: String,
+    var item_number : Int,
     var isFavorite: Boolean = false
 ) : Parcelable

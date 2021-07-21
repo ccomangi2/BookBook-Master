@@ -18,6 +18,10 @@ class BookTextTypeViewHolder(private val binding: ItemTextTypeBookBinding) : Rec
         binding.executePendingBindings()
     }
 
+    fun item_number(position: Int) {
+        binding.tvItemNumber.text = position.toString()
+    }
+
     companion object {
         fun from(parent: ViewGroup, bookClickListener: OnBookClickListener): BookTextTypeViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)

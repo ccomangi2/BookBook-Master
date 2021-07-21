@@ -1,14 +1,19 @@
 package com.example.bookbook_master.viewmodel
 
+import android.view.View
 import androidx.lifecycle.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.bookbook_master.adapter.BookListAdapter
 import com.example.bookbook_master.adapter.callback.OnSearchActionListener
 import com.example.bookbook_master.model.data.BookRepository
 import com.example.bookbook_master.model.data.Document
+import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlin.concurrent.thread
 
 /**
  * 도서 검색 뷰모델
@@ -36,26 +41,6 @@ class SearchViewModel(private val bookRepository: BookRepository) : BaseViewMode
     var isEndBookList: Boolean = false              // 도서 목록 API 호출 완료여부 (더이상 호출할 페이지가 없음)
     private var bookListPageNo: Int = 1             // 현재 도서 목록 페이지 번호
     private var isRefreshBookList: Boolean = true   // 도서 목록 API 호출시 기존 데이터 초기화 여부
-
-    /**
-     * 도서 목록의 뷰타입 설정
-     * @param viewType 리스트뷰 뷰타입 (TEXT, IMAGE)
-     */
-    private fun setBookListViewType(viewType: Int) = _bookListViewType.postValue(viewType)
-
-    /**
-     * 도서 목록의 뷰타입 변경
-     * @param viewType 리스트뷰 뷰타입 (TEXT, IMAGE)
-     */
-    fun toggleBookListViewType(viewType: Int?) {
-        viewType?.let {
-            if (it == BookListAdapter.TEXT_VIEW_TYPE) {
-                setBookListViewType(BookListAdapter.IMAGE_VIEW_TYPE)
-            } else {
-                setBookListViewType(BookListAdapter.TEXT_VIEW_TYPE)
-            }
-        }
-    }
 
     /**
      * 도서 검색 요청
@@ -106,7 +91,6 @@ class SearchViewModel(private val bookRepository: BookRepository) : BaseViewMode
      * @param isRefresh 기존 데이터 초기화 여부
      */
     private fun requestBookList(keyword: String, isRefresh: Boolean = true): LiveData<List<Document>> {
-        showLoading()
         if (searchBookJob.isActive) {
             searchBookJob.cancel()
             searchBookJob = Job()
@@ -154,5 +138,4 @@ class SearchViewModel(private val bookRepository: BookRepository) : BaseViewMode
         super.onCleared()
         searchBookJob.cancel()
     }
-
 }

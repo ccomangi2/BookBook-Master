@@ -1,10 +1,13 @@
 package com.example.bookbook_master.adapter
 
+import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -12,9 +15,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.bookbook_master.R
 import com.example.bookbook_master.adapter.callback.OnSearchActionListener
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.android.synthetic.main.fragment_search.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.concurrent.thread
 
 /**
  * 공통으로 사용하는 바인딩 어댑터
@@ -103,6 +108,7 @@ object BaseBindingAdapters {
         }
     }
 
+    // 저자
     @BindingAdapter("bookAuthors")
     @JvmStatic
     fun setBookAuthors(textView: AppCompatTextView, authors: List<String>) {
@@ -111,6 +117,16 @@ object BaseBindingAdapters {
         } else {
             textView.text = authors.joinToString(",")
         }
+        // 저자가 두명 이상일 경우 세번째 저자부터는 생략 기호 (...) 표시
+        if (authors.size > 2) {
+            textView.text = authors.get(0) + "," + authors.get(1) + "..."
+        }
+    }
+
+    @BindingAdapter("itemNumber")
+    @JvmStatic
+    fun setBookItemNumber(textView: AppCompatTextView, item_number: Int) {
+        textView.text = item_number.toString()
     }
 
     @BindingAdapter("isFavoriteBook")

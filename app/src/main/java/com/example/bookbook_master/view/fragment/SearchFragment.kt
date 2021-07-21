@@ -14,14 +14,18 @@ import com.example.bookbook_master.model.data.Document
 import com.example.bookbook_master.view.activity.MainActivity
 import com.example.bookbook_master.viewmodel.DetailViewModel
 import com.example.bookbook_master.viewmodel.SearchViewModel
+import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.android.synthetic.main.layout_toolbar_search.*
+import org.koin.androidx.scope.lifecycleScope
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.concurrent.thread
 
 /**
  * 도서 검색 화면
  * @author philippe
  */
-class SearchFragment : BaseFragment<FragmentSearchBinding>() {
+class SearchFragment : BaseFragment<FragmentSearchBinding>(){
 
     companion object {
         private const val DEFAULT_VIEW_TYPE = BookListAdapter.TEXT_VIEW_TYPE
@@ -73,12 +77,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                 showAlertDialog(it, getString(R.string.message_network_error))
             }
         })
-
-        detailViewModel.sharedDocument.observe(this, {
-            updateDocument(it)
-        })
-
-        searchViewModel.searchBookList(getString(R.string.default_search_keyword))
     }
 
     /**
@@ -133,22 +131,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     /**
-     * 특정 도서 정보 갱신 (상세 화면에서 좋아요 선택시)
-     */
-    private fun updateDocument(document: Document) {
-        bookListAdapter.currentList.run {
-            for (i in 0 until this.size) {
-                val curDocument = this[i]
-                if (curDocument.isbn == document.isbn) {
-                    curDocument.isFavorite = document.isFavorite
-                    bookListAdapter.notifyItemChanged(i)
-                    break
-                }
-            }
-        }
-    }
-
-    /**
      * 알림창 띄우기
      */
     private fun showAlertDialog(context: Context, msg: String) {
@@ -195,5 +177,4 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             }
         }
     }
-
 }

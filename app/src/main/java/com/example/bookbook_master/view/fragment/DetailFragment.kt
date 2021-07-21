@@ -6,6 +6,7 @@ import com.example.bookbook_master.R
 import com.example.bookbook_master.databinding.FragmentDetailBinding
 import com.example.bookbook_master.model.data.Document
 import com.example.bookbook_master.viewmodel.DetailViewModel
+import kotlinx.android.synthetic.main.fragment_detail.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
