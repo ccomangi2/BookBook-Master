@@ -2,6 +2,7 @@ package com.example.bookbook_master.view.fragment
 
 import android.content.Context
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,7 +36,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(){
     }
 
     private val searchViewModel: SearchViewModel by viewModel()
-    private val detailViewModel: DetailViewModel by sharedViewModel()
 
     private lateinit var bookListAdapter: BookListAdapter
     private var currentListViewType = DEFAULT_VIEW_TYPE
@@ -50,6 +50,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(){
         }
     }
 
+    // xml
     override fun getLayoutRes(): Int = R.layout.fragment_search
 
     override fun initData() {
@@ -142,6 +143,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(){
             create()
         }
         alertDialog.show()
+    }
+
+    /*
+     * 토스트 메시지 띄우기
+     */
+    private fun showToastMessage(context: Context, msg: String) {
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
     }
 
     /**

@@ -52,6 +52,7 @@
                     android:drawablePadding="10dp"
                     android:ems="10"
                     android:fontFamily="@font/medium"
+                    android:textColorHint="#959595"
                     android:hint="도서 검색"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"

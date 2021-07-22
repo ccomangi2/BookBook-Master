@@ -9,7 +9,6 @@ import com.example.bookbook_master.model.data.Document
  * @author philippe
  */
 class DetailViewModel : BaseViewModel() {
-
     private val _document = MutableLiveData<Document>()
     val document: LiveData<Document> = _document
 

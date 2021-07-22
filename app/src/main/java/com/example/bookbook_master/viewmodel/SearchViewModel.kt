@@ -22,11 +22,14 @@ import kotlin.concurrent.thread
 class SearchViewModel(private val bookRepository: BookRepository) : BaseViewModel(),
     OnSearchActionListener {
 
+    //coroutines의 상태
     private var searchBookJob = Job()
 
+    //뷰 타입을 텍스트뷰타입으로 설정(상관없음)
     private val _bookListViewType = MutableLiveData(BookListAdapter.TEXT_VIEW_TYPE)
     val bookListViewType: LiveData<Int> = _bookListViewType
 
+    //검색어
     private val searchKeyword = MutableLiveData<String>()
 
     val inputKeyword = MutableLiveData("")
@@ -91,8 +94,10 @@ class SearchViewModel(private val bookRepository: BookRepository) : BaseViewMode
      * @param isRefresh 기존 데이터 초기화 여부
      */
     private fun requestBookList(keyword: String, isRefresh: Boolean = true): LiveData<List<Document>> {
+        // 프로그래스바 보이기
+        showLoading()
         if (searchBookJob.isActive) {
-            searchBookJob.cancel()
+            searchBookJob.cancel() // 취소 상태
             searchBookJob = Job()
         }
 
@@ -114,13 +119,15 @@ class SearchViewModel(private val bookRepository: BookRepository) : BaseViewMode
                         emit(bookList)
                     } ?: emit(this.documents)
 
-                    bookListPageNo++
+                    bookListPageNo++ // 도서 목록 페이지 번호 증가
                 }
+                // 프로그레스바 없애기
                 hideLoading()
-            } catch (ex: Exception) {
+            } catch (ex: Exception) { //네트워크 오류
                 ex.message?.let {
                     showNetworkError(it)
                 }
+                // 프로그래스바 없애기
                 hideLoading()
             }
         }
@@ -134,6 +141,7 @@ class SearchViewModel(private val bookRepository: BookRepository) : BaseViewMode
         searchBookList(keyword)
     }
 
+    // 리소스 정리
     override fun onCleared() {
         super.onCleared()
         searchBookJob.cancel()

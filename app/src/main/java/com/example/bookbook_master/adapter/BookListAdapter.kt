@@ -22,10 +22,12 @@ class BookListAdapter(var itemViewType: Int, private val bookClickListener: OnBo
     ListAdapter<Document, RecyclerView.ViewHolder>(BookListDiffCallback()) {
 
     companion object {
+        // 둘이 똑같은 뷰 - 나중을 위해 구분해 둠
         const val TEXT_VIEW_TYPE = 1
         const val IMAGE_VIEW_TYPE = 2
     }
 
+    // 뷰홀더가 생성되는 함수
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TEXT_VIEW_TYPE -> BookTextTypeViewHolder.from(parent, bookClickListener)
@@ -34,6 +36,7 @@ class BookListAdapter(var itemViewType: Int, private val bookClickListener: OnBo
         }
     }
 
+    // 생성된 뷰홀더에 데이터를 바인딩 해주는 함수
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is BookTextTypeViewHolder -> {
@@ -48,6 +51,7 @@ class BookListAdapter(var itemViewType: Int, private val bookClickListener: OnBo
         }
     }
 
+    // 뷰 타입 함수 (지금은 필요없는 함수)
     override fun getItemViewType(position: Int): Int {
         return itemViewType
     }

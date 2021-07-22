@@ -8,7 +8,7 @@ import com.example.bookbook_master.databinding.ItemTextTypeBookBinding
 import com.example.bookbook_master.model.data.Document
 
 /**
- * 텍스트 타입 도서 뷰홀더
+ * 텍스트 타입 도서 뷰홀더 (사실상 둘 다 똑같음)
  * @author philippe
  */
 class BookTextTypeViewHolder(private val binding: ItemTextTypeBookBinding) : RecyclerView.ViewHolder(binding.root) {

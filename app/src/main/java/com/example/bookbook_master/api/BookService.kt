@@ -18,17 +18,17 @@ interface BookService {
 
     @GET("/v3/search/book")
     suspend fun searchBooks(
-        @Query("query") query: String,
-        @Query("size") size: Int = MAX_PAGE_COUNT,
-        @Query("target") target: String = TARGET_TITLE,
-        @Query("page") page: Int
+        @Query("query") query: String, //검색을 원하는 질의어
+        @Query("size") size: Int = MAX_PAGE_COUNT, //한 페이지에 보여질 문서 수
+        @Query("target") target: String = TARGET_TITLE, //검색 필드 제한(title)
+        @Query("page") page: Int //결과 페이지 번호
     ): BookListResponse
 
     companion object {
-        private const val BASE_URL = "https://dapi.kakao.com/"
-        private const val HEADER_AUTHORIZATION = "Authorization"
+        private const val BASE_URL = "https://dapi.kakao.com/" //url
+        private const val HEADER_AUTHORIZATION = "Authorization" //KaKaoAK
 
-        private const val MAX_PAGE_COUNT = 50       // 한 페이지에 보여질 문서 수
+        private const val MAX_PAGE_COUNT = 15       // 한 페이지에 보여질 문서 수
         private const val TARGET_TITLE = "title"    // 검색 필드 (title)
 
         fun create(): BookService {

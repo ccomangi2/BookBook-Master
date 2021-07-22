@@ -30,6 +30,7 @@ object BaseBindingAdapters {
     private const val INPUT_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     private const val OUTPUT_DATE_FORMAT = "yyyy-MM-dd"
 
+    // 검색 결과가 없을 경우, "검색 결과가 없습니다" 문구 띄우기
     @JvmStatic
     @BindingAdapter("visibleOrGone")
     fun setVisibleOrGone(view: View, isVisible: Boolean) {
@@ -40,6 +41,7 @@ object BaseBindingAdapters {
         }
     }
 
+    // ProgressBar(로딩바) 띄우기
     @BindingAdapter("isShowLoading")
     @JvmStatic
     fun setLoading(loadingBar: ContentLoadingProgressBar, isShow: Boolean) {
@@ -50,6 +52,7 @@ object BaseBindingAdapters {
         }
     }
 
+    // 도서 표지 이미지 띄우기
     @BindingAdapter("imageUrl")
     @JvmStatic
     fun loadImageUrl(imageView: AppCompatImageView, imageUrl: String?) {
@@ -64,6 +67,7 @@ object BaseBindingAdapters {
         }
     }
 
+    // 도서 출판 날짜 띄우기
     @BindingAdapter("dateTimeText")
     @JvmStatic
     fun setDateTimeText(textView: AppCompatTextView, dateTime: String?) {
@@ -87,16 +91,7 @@ object BaseBindingAdapters {
         }
     }
 
-    @BindingAdapter("bookListViewType")
-    @JvmStatic
-    fun setBookListViewType(imageView: AppCompatImageView, viewType: Int) {
-        when (viewType) {
-            BookListAdapter.TEXT_VIEW_TYPE -> imageView.setImageResource(R.drawable.ic_list_on_30)
-            BookListAdapter.IMAGE_VIEW_TYPE -> imageView.setImageResource(R.drawable.ic_grid_on_30)
-            else -> imageView.setImageResource(R.drawable.ic_list_on_30)
-        }
-    }
-
+    // 검색창
     @BindingAdapter("onSearchActionListener")
     @JvmStatic
     fun setOnSearchActionListener(editText: TextInputEditText, listener: OnSearchActionListener) {
@@ -123,19 +118,10 @@ object BaseBindingAdapters {
         }
     }
 
+    // 아이템 번호
     @BindingAdapter("itemNumber")
     @JvmStatic
     fun setBookItemNumber(textView: AppCompatTextView, item_number: Int) {
         textView.text = item_number.toString()
-    }
-
-    @BindingAdapter("isFavoriteBook")
-    @JvmStatic
-    fun setFavoriteBook(imageButton: AppCompatImageButton, isFavorite: Boolean) {
-        if (isFavorite) {
-            imageButton.setImageResource(R.drawable.ic_favorite_on_24)
-        } else {
-            imageButton.setImageResource(R.drawable.ic_favorite_off_24)
-        }
     }
 }
