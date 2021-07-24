@@ -1,14 +1,19 @@
 package com.example.bookbook_master.view.fragment
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.size
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.load.HttpException
+import com.example.bookbook_master.BookBookApplication
 import com.example.bookbook_master.R
 import com.example.bookbook_master.adapter.BookListAdapter
+import com.example.bookbook_master.adapter.callback.EndlessRecyclerViewScrollListener
 import com.example.bookbook_master.adapter.callback.OnBookClickListener
 import com.example.bookbook_master.databinding.FragmentSearchBinding
 import com.example.bookbook_master.model.data.Document
@@ -123,7 +128,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(){
                         else -> (bookListView.layoutManager as GridLayoutManager)
                     }
 
-                    if (layoutManager.findLastCompletelyVisibleItemPosition() > it.itemCount - 6) {
+                    if (layoutManager.findLastCompletelyVisibleItemPosition() > it.itemCount - 15) {
+                        searchViewModel.showLoading()
                         searchViewModel.searchMoreBookList()
                     }
                 }
@@ -143,13 +149,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(){
             create()
         }
         alertDialog.show()
-    }
-
-    /*
-     * 토스트 메시지 띄우기
-     */
-    private fun showToastMessage(context: Context, msg: String) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
     }
 
     /**

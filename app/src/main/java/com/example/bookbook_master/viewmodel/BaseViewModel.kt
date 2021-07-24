@@ -50,7 +50,7 @@ open class BaseViewModel : ViewModel() {
      * @param msg 오류 메시지
      */
     fun showNetworkError(msg: String) {
-        _showNetworkError.value = msg
+        _showNetworkError.postValue(msg)
     }
 
 }

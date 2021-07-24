@@ -40,6 +40,7 @@
                     android:adjustViewBounds="true"
                     android:background="#00000000"
                     android:scaleType="fitCenter"
+                    android:onClick="@{clickListener}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -49,26 +50,32 @@
                     android:id="@+id/tv_item_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1"
+                    android:layout_marginStart="3dp"
+                    android:fontFamily="@font/medium"
+                    android:text="@{viewModel.document.item_number}"
                     android:textColor="#3CCBDA"
                     android:textSize="22sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/b_back"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="1"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_book_title"
+                    android:id="@+id/tv_book_title_bar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/light"
-                    tools:text="소프트웨어 장인"
+                    android:text="@{viewModel.document.title}"
                     android:textColor="#000000"
                     android:textSize="20sp"
-                    android:text="@{viewModel.document.title}"
+                    android:ems="5"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="소프트웨어 장인" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.MaterialToolbar>
 

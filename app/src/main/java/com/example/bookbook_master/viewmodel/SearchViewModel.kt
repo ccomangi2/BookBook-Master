@@ -1,6 +1,9 @@
 package com.example.bookbook_master.viewmodel
 
+import android.content.Context
 import android.view.View
+import android.widget.SearchView
+import android.widget.Toast
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -8,6 +11,7 @@ import com.example.bookbook_master.adapter.BookListAdapter
 import com.example.bookbook_master.adapter.callback.OnSearchActionListener
 import com.example.bookbook_master.model.data.BookRepository
 import com.example.bookbook_master.model.data.Document
+import com.example.bookbook_master.view.fragment.SearchFragment
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +25,8 @@ import kotlin.concurrent.thread
  */
 class SearchViewModel(private val bookRepository: BookRepository) : BaseViewModel(),
     OnSearchActionListener {
+
+    private lateinit var bookListView: RecyclerView
 
     //coroutines의 상태
     private var searchBookJob = Job()
@@ -110,16 +116,19 @@ class SearchViewModel(private val bookRepository: BookRepository) : BaseViewMode
             try {
                 bookRepository.getBookList(keyword, bookListPageNo).run {
                     isEndBookList = this.meta.isEnd
-                    mainBookList.value?.let {
-                        val bookList = it.toMutableList()
-                        if (isRefresh) {
-                            bookList.clear()
-                        }
-                        bookList.addAll(this.documents)
-                        emit(bookList)
-                    } ?: emit(this.documents)
-
-                    bookListPageNo++ // 도서 목록 페이지 번호 증가
+                    if(isEndBookList == true) {
+                        showToastMessage("마지막 페이지 입니다.")
+                    } else {
+                        mainBookList.value?.let {
+                            val bookList = it.toMutableList()
+                            if (isRefresh) {
+                                bookList.clear()
+                            }
+                            bookList.addAll(this.documents)
+                            emit(bookList)
+                        } ?: emit(this.documents)
+                        bookListPageNo++ // 도서 목록 페이지 번호 증가
+                    }
                 }
                 // 프로그레스바 없애기
                 hideLoading()
@@ -145,5 +154,12 @@ class SearchViewModel(private val bookRepository: BookRepository) : BaseViewMode
     override fun onCleared() {
         super.onCleared()
         searchBookJob.cancel()
+    }
+
+    /*
+     * 토스트 메시지 띄우기
+     */
+    private fun showToastMessage(msg: String) {
+        Toast.makeText(bookListView.context, msg, Toast.LENGTH_SHORT).show()
     }
 }

@@ -19,7 +19,8 @@ class BookImageTypeViewHolder(private val binding: ItemImageTypeBookBinding) : R
     }
 
     fun item_number(position: Int) {
-        binding.tvItemNumber.text = position.toString()
+        binding.document?.item_number = position.toString()
+        binding.tvItemNumber.text = binding.document?.item_number
     }
 
     companion object {
