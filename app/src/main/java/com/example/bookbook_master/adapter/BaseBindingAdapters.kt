@@ -1,5 +1,6 @@
 package com.example.bookbook_master.adapter
 
+import android.annotation.SuppressLint
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -95,6 +96,7 @@ object BaseBindingAdapters {
     }
 
     // 저자
+    @SuppressLint("SetTextI18n")
     @BindingAdapter("bookAuthors")
     @JvmStatic
     fun setBookAuthors(textView: AppCompatTextView, authors: List<String>) {

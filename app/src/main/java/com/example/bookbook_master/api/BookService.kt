@@ -15,7 +15,6 @@ import retrofit2.http.Query
  * @author philippe
  */
 interface BookService {
-
     @GET("/v3/search/book")
     suspend fun searchBooks(
         @Query("query") query: String, //검색을 원하는 질의어
@@ -47,11 +46,13 @@ interface BookService {
                 return@Interceptor it.proceed(newRequest)
             }
 
+            //http 통신
             val httpClient = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(responseInterceptor)
                 .build()
 
+            //api 연동
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(httpClient)
