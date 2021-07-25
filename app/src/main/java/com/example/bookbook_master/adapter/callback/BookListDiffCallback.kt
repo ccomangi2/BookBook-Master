@@ -8,7 +8,7 @@ import com.example.bookbook_master.model.data.Document
  */
 class BookListDiffCallback : DiffUtil.ItemCallback<Document>() {
     override fun areItemsTheSame(oldItem: Document, newItem: Document): Boolean {
-        return (oldItem.isbn == newItem.isbn && oldItem.isFavorite == newItem.isFavorite)
+        return (oldItem.isbn == newItem.isbn && oldItem.isFavorite == newItem.isFavorite) // 좋아요 여부(사용하지 않음)
     }
 
     override fun areContentsTheSame(oldItem: Document, newItem: Document): Boolean {

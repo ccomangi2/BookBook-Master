@@ -10,12 +10,14 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.bookbook_master.R
 import com.example.bookbook_master.adapter.callback.OnSearchActionListener
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.coroutines.launch
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -38,17 +40,6 @@ object BaseBindingAdapters {
             view.visibility = View.VISIBLE
         } else {
             view.visibility = View.GONE
-        }
-    }
-
-    // ProgressBar(로딩바) 띄우기
-    @BindingAdapter("isShowLoading")
-    @JvmStatic
-    fun setLoading(loadingBar: ContentLoadingProgressBar, isShow: Boolean) {
-        if (isShow) {
-            loadingBar.show()
-        } else {
-            loadingBar.hide()
         }
     }
 
@@ -97,7 +88,7 @@ object BaseBindingAdapters {
     fun setOnSearchActionListener(editText: TextInputEditText, listener: OnSearchActionListener) {
         editText.setOnEditorActionListener { view, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                listener.onSearchEditorAction(view.text.toString())
+                //listener.onSearchEditorAction(view.text.toString())
             }
             false
         }

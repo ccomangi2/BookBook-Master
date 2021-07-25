@@ -1,16 +1,16 @@
 package com.example.bookbook_master.view.fragment
 
 import android.content.Context
+import android.renderscript.ScriptGroup
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.size
+import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.load.HttpException
-import com.example.bookbook_master.BookBookApplication
 import com.example.bookbook_master.R
 import com.example.bookbook_master.adapter.BookListAdapter
 import com.example.bookbook_master.adapter.callback.EndlessRecyclerViewScrollListener
@@ -32,7 +32,6 @@ import kotlin.concurrent.thread
  * @author philippe
  */
 class SearchFragment : BaseFragment<FragmentSearchBinding>(){
-
     companion object {
         private const val DEFAULT_VIEW_TYPE = BookListAdapter.TEXT_VIEW_TYPE
 
@@ -83,6 +82,26 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(){
                 showAlertDialog(it, getString(R.string.message_network_error))
             }
         })
+
+        // 검색 버튼 클릭 시
+        b_search.setOnClickListener {
+            //검색창에 문자를 입력 후 1초가 지나면 자동으로 검색이 됩니다.
+            //데이터를 가져오는 동안 ProgressBar 가 나타나며 목록이 생성되면 사라집니다.
+            showProgress(true) // ProgressBar 나타남
+            thread(start = true) {
+                Thread.sleep(1000) //1초
+                activity?.runOnUiThread() {
+                    showProgress(false) // ProgressBar 사라짐
+                    searchViewModel.searchBookList(et_search_keyword.text.toString(), v_loading) // 목록 생성
+                }
+            }
+        }
+    }
+
+    // 프로그레스바
+    fun showProgress(isShow: Boolean) {
+        if(isShow) v_loading.visibility = View.VISIBLE
+        else v_loading.visibility = View.GONE
     }
 
     /**
@@ -94,6 +113,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(){
     private fun initBookListView(bookListView: RecyclerView, viewType: Int, bookListAdapter: BookListAdapter) {
         when (viewType) {
             BookListAdapter.TEXT_VIEW_TYPE -> {
+                //검색 결과 목록은 3xN  Grid Recyclerview 로 나타납니다.
                 bookListView.layoutManager = GridLayoutManager(bookListView.context, 3)
             }
             BookListAdapter.IMAGE_VIEW_TYPE -> {
@@ -113,10 +133,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                if (searchViewModel.isLoading() || searchViewModel.isEndBookList) {
-                    return
-                }
-
                 recyclerView.adapter?.let {
                     val layoutManager = when (currentListViewType) {
                         BookListAdapter.TEXT_VIEW_TYPE -> {
@@ -128,9 +144,24 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(){
                         else -> (bookListView.layoutManager as GridLayoutManager)
                     }
 
-                    if (layoutManager.findLastCompletelyVisibleItemPosition() > it.itemCount - 15) {
-                        searchViewModel.showLoading()
-                        searchViewModel.searchMoreBookList()
+                    if(!bookListView.canScrollVertically(1)) {
+                        //검색 결과가 있을 경우 데이터는 15개씩 Paging 처리합니다. 최초 15개의 데이터를 가져온 후 스크롤 할때마다 15개씩 데이터가 추가됩니다.
+                        if (it.itemCount % 15 == 0) {
+                            //검색어가 변경되면 1초 후 목록이 자동으로 갱신되고 다시 데이터를 가져옵니다.
+                            //데이터를 가져오는 동안 ProgressBar 가 나타나며 목록이 생성되면 사라집니다.
+                            showProgress(true) // ProgressBar 나타남
+                            thread(start = true) {
+                                Thread.sleep(1000) //1초
+                                activity?.runOnUiThread() {
+                                    showProgress(false) // ProgressBar 사라짐
+                                    searchViewModel.searchMoreBookList() // 목록 생성
+                                    Log.d("BookBook : ", it.itemCount.toString())
+                                }
+                            }
+                        } else {
+                            //데이터가 더 이상 없는 경우 '마지막 페이지입니다'는 Toast 메시지가 나타납니다.
+                            showToastMessage("마지막 페이지 입니다.")
+                        }
                     }
                 }
             }
@@ -149,6 +180,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(){
             create()
         }
         alertDialog.show()
+    }
+
+    /*
+     * 토스트 메시지 띄우기
+     */
+    private fun showToastMessage(msg: String) {
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
     }
 
     /**
