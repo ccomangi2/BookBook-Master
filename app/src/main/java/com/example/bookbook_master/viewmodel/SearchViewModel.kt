@@ -1,6 +1,7 @@
 package com.example.bookbook_master.viewmodel
 
 import android.accounts.NetworkErrorException
+import android.os.NetworkOnMainThreadException
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.*
@@ -115,7 +116,7 @@ class SearchViewModel(private val bookRepository: BookRepository) : BaseViewMode
 
                         bookListPageNo++ // 도서 목록 페이지 번호 증가
                     }
-                } catch (ex: NetworkErrorException) { //네트워크 오류
+                } catch (ex: NetworkOnMainThreadException) { //네트워크 오류
                     ex.message?.let {
                         showNetworkError(it)
                     }
