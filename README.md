@@ -2,7 +2,7 @@
 다음 검색 API 를 활용한 도서 정보 검색 앱
 
 # 실행 화면
-<img src="https://ifh.cc/g/GmYliT.jpg" width="300"> <img src="https://ifh.cc/g/BV3YHa.jpg" width="300"> <img src="https://ifh.cc/g/7Tbbnr.jpg" width="300">
+<img src="https://ifh.cc/g/GmYliT.jpg" width="200"> <img src="https://ifh.cc/g/BV3YHa.jpg" width="200"> <img src="https://ifh.cc/g/7Tbbnr.jpg" width="200">
 
 # 사용 기술
 - Kotlin : 1.4.20
