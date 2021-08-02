@@ -2,6 +2,8 @@ package com.example.bookbook_master.view.fragment
 
 import android.content.Context
 import android.renderscript.ScriptGroup
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -87,14 +89,22 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(){
         b_search.setOnClickListener {
             //검색창에 문자를 입력 후 1초가 지나면 자동으로 검색이 됩니다.
             //데이터를 가져오는 동안 ProgressBar 가 나타나며 목록이 생성되면 사라집니다.
-            showProgress(true) // ProgressBar 나타남
-            thread(start = true) {
-                Thread.sleep(1000) //1초
-                activity?.runOnUiThread() {
-                    showProgress(false) // ProgressBar 사라짐
-                    searchViewModel.searchBookList(et_search_keyword.text.toString(), v_loading) // 목록 생성
-                }
-            }
+            search()
+        }
+
+        et_search_keyword.addTextChangedListener(SearchEditWatcher())
+    }
+
+    // 문자열이 바뀔때
+    inner class SearchEditWatcher : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            search()
+        }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            search()
+        }
+        override fun afterTextChanged(s: Editable?) {
+            search()
         }
     }
 
@@ -102,6 +112,20 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(){
     fun showProgress(isShow: Boolean) {
         if(isShow) v_loading.visibility = View.VISIBLE
         else v_loading.visibility = View.GONE
+    }
+
+    //자동 검색
+    //검색창에 문자를 입력 후 1초가 지나면 자동으로 검색이 됩니다.
+    //데이터를 가져오는 동안 ProgressBar 가 나타나며 목록이 생성되면 사라집니다.
+    fun search() {
+        showProgress(true) // ProgressBar 나타남
+        thread(start = true) {
+            Thread.sleep(3000) //1초
+            activity?.runOnUiThread() {
+                showProgress(false) // ProgressBar 사라짐
+                searchViewModel.searchBookList(et_search_keyword.text.toString(), v_loading) // 목록 생성
+            }
+        }
     }
 
     /**
@@ -151,14 +175,16 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(){
                             //데이터를 가져오는 동안 ProgressBar 가 나타나며 목록이 생성되면 사라집니다.
                             showProgress(true) // ProgressBar 나타남
                             thread(start = true) {
-                                Thread.sleep(1000) //1초
+                                Thread.sleep(3000) //1초
                                 activity?.runOnUiThread() {
                                     showProgress(false) // ProgressBar 사라짐
                                     searchViewModel.searchMoreBookList() // 목록 생성
                                     Log.d("BookBook : ", it.itemCount.toString())
                                 }
                             }
-                        } else {
+                        }
+                        else if(it.itemCount < 15) { }
+                        else {
                             //데이터가 더 이상 없는 경우 '마지막 페이지입니다'는 Toast 메시지가 나타납니다.
                             showToastMessage("마지막 페이지 입니다.")
                         }
