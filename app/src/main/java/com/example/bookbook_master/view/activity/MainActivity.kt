@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.example.bookbook_master.R
+import com.example.bookbook_master.view.fragment.MainFragment
 import com.example.bookbook_master.view.fragment.SearchFragment
 import com.google.android.material.textfield.TextInputEditText
 
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, SearchFragment.newInstance()).commitNow()
+                .replace(R.id.container, MainFragment.newInstance()).commitNow()
         }
     }
 

@@ -35,7 +35,7 @@ import kotlin.concurrent.thread
  */
 class SearchFragment : BaseFragment<FragmentSearchBinding>(){
     companion object {
-        private const val DEFAULT_VIEW_TYPE = BookListAdapter.TEXT_VIEW_TYPE
+        private const val DEFAULT_VIEW_TYPE = BookListAdapter.IMAGE_VIEW_TYPE
 
         @JvmStatic
         fun newInstance() = SearchFragment()
