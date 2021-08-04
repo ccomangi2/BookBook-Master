@@ -4,7 +4,7 @@ import com.example.bookbook_master.model.data.Document
 import com.example.bookbook_master.model.roomDB.entity.Contacts
 
 /**
- * 위시 도서 목록 삭제 리스너
+ * 위시리스트 도서 삭제 리스너
  * @author philippe
  */
 interface OnWishBookDeleteListener {
