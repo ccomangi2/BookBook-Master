@@ -28,8 +28,10 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
         fun newInstance() = WishFragment()
     }
 
+    // 뷰모델 변경 해야함
     private val searchViewModel: SearchViewModel by viewModel()
 
+    // 어댑터 변경 해야함
     private lateinit var bookListAdapter: BookListAdapter
     private var currentListViewType = DEFAULT_VIEW_TYPE
 
@@ -44,7 +46,6 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
     }
 
     override fun getLayoutRes(): Int = R.layout.fragment_wishlist
-
 
     override fun initData() {
         bookListAdapter = BookListAdapter(DEFAULT_VIEW_TYPE, bookClickListener)

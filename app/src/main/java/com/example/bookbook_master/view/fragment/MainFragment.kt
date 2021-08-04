@@ -21,12 +21,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class MainFragment : BaseFragment<FragmentMainBinding>(), View.OnClickListener {
     companion object {
-        private const val DEFAULT_VIEW_TYPE = BookListAdapter.TEXT_VIEW_TYPE
+        private const val DEFAULT_VIEW_TYPE = BookListAdapter.IMAGE_VIEW_TYPE
 
         @JvmStatic
         fun newInstance() = MainFragment()
     }
 
+    // 뷰모델, 어댑터 변경 해야 함
     private val searchViewModel: SearchViewModel by viewModel()
 
     private lateinit var bookListAdapter: BookListAdapter
@@ -56,7 +57,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), View.OnClickListener {
         b_wishView.setOnClickListener(View.OnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .add(R.id.container, WishFragment.newInstance())
-                .addToBackStack(null)8
+                .addToBackStack(null)
                 .commitAllowingStateLoss()
         })
 
@@ -72,7 +73,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), View.OnClickListener {
         when (v?.id) {
             R.id.b_wishView -> {
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .add(R.id.container, SearchFragment.newInstance())
+                    .add(R.id.container, WishFragment.newInstance())
                     .addToBackStack(null)
                     .commitAllowingStateLoss()
             }
