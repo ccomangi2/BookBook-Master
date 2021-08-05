@@ -6,6 +6,8 @@ import com.example.bookbook_master.model.data.Document
 
 @Entity(tableName = "recent")
 data class Recent(
-    @PrimaryKey(autoGenerate = true)
-    var document: Document
-)
+    @PrimaryKey(autoGenerate = true) var index: Int,
+    var document: Document?
+){
+    constructor(): this(0,null)
+}
