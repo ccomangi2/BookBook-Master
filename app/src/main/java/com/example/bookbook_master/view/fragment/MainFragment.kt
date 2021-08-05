@@ -12,7 +12,6 @@ import com.example.bookbook_master.databinding.FragmentMainBinding
 import com.example.bookbook_master.model.data.Document
 import com.example.bookbook_master.viewmodel.DetailViewModel
 import com.example.bookbook_master.viewmodel.SearchViewModel
-import kotlinx.android.synthetic.main.layout_toolbar_main.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -53,20 +52,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), View.OnClickListener {
     override fun initView(viewDataBinding: FragmentMainBinding) {
         // 수정 필요
         viewDataBinding.viewModel = searchViewModel
-
-        b_wishView.setOnClickListener(View.OnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .add(R.id.container, WishFragment.newInstance())
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
-        })
-
-        b_searchView.setOnClickListener(View.OnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .add(R.id.container, SearchFragment.newInstance())
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
-        })
+        viewDataBinding.clickListener = this
     }
 
     override fun onClick(v: View?) {

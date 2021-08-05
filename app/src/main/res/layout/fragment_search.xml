@@ -21,10 +21,85 @@
         android:background="@color/white"
         tools:context=".view.fragment.SearchFragment">
 
-        <include
-            android:id="@+id/layout_toolbar_search"
-            layout="@layout/layout_toolbar_search"
-            app:viewModel="@{viewModel}" />
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:background="#3CCBDA">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#3CCBDA"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#3CCBDA">
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/b_back"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="20dp"
+                        android:adjustViewBounds="true"
+                        android:background="#00000000"
+                        android:onClick="@{clickListener}"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/back_search" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_search_keyword"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginLeft="35dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginRight="90dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/search_bar"
+                        android:drawableStart="@drawable/search"
+                        android:drawableLeft="@drawable/search"
+                        android:drawablePadding="10dp"
+                        android:ems="10"
+                        android:fontFamily="@font/medium"
+                        android:hint="도서 검색"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:singleLine="true"
+                        android:text="@={viewModel.inputKeyword}"
+                        android:textColor="#000000"
+                        android:textColorHint="#959595"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/b_back"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:onSearchActionListener="@{viewModel}" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/b_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="#00FFFFFF"
+                        android:fontFamily="@font/medium"
+                        android:text="검색"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/et_search_keyword" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_book_list"

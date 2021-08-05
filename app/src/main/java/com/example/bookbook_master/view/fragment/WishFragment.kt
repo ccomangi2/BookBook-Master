@@ -13,7 +13,6 @@ import com.example.bookbook_master.databinding.FragmentWishlistBinding
 import com.example.bookbook_master.model.data.Document
 import com.example.bookbook_master.viewmodel.DetailViewModel
 import com.example.bookbook_master.viewmodel.SearchViewModel
-import kotlinx.android.synthetic.main.layout_toolbar_main.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -54,6 +53,7 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
     override fun initView(viewDataBinding: FragmentWishlistBinding) {
         // 수정 필요
         viewDataBinding.viewModel = searchViewModel
+        viewDataBinding.clickListener = this
     }
 
     override fun onClick(v: View?) {
