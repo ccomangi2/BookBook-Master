@@ -32,8 +32,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#3CCBDA"
-                app:layout_scrollFlags="scroll|enterAlways">
+                android:background="#3CCBDA">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
