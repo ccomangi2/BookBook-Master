@@ -11,7 +11,6 @@ import com.example.bookbook_master.model.data.Document
 class DetailViewModel : BaseViewModel() {
     private val _document = MutableLiveData<Document>()
     val document: LiveData<Document> = _document
-
     /**
      * 도서 정보 세팅
      * @param document 도서 정보

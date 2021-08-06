@@ -23,7 +23,6 @@ import com.example.bookbook_master.view.activity.MainActivity
 import com.example.bookbook_master.viewmodel.DetailViewModel
 import com.example.bookbook_master.viewmodel.SearchViewModel
 import kotlinx.android.synthetic.main.fragment_search.*
-import kotlinx.android.synthetic.main.layout_toolbar_search.*
 import org.koin.androidx.scope.lifecycleScope
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,7 +32,7 @@ import kotlin.concurrent.thread
  * 도서 검색 화면
  * @author philippe
  */
-class SearchFragment : BaseFragment<FragmentSearchBinding>(){
+class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListener {
     companion object {
         private const val DEFAULT_VIEW_TYPE = BookListAdapter.IMAGE_VIEW_TYPE
 
@@ -65,6 +64,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(){
 
     override fun initView(viewDataBinding: FragmentSearchBinding) {
         viewDataBinding.viewModel = searchViewModel
+        viewDataBinding.clickListener = this
         initBookListView(viewDataBinding.rvBookList, DEFAULT_VIEW_TYPE, bookListAdapter)
         initBookListScrollListener(viewDataBinding.rvBookList)
 
@@ -74,7 +74,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(){
         })
 
         searchViewModel.mainBookList.observe(this, {
-            hideKeyboard(viewDataBinding.layoutToolbarSearch.etSearchKeyword)
+            hideKeyboard(viewDataBinding.etSearchKeyword)
             bookListAdapter.submitList(it)
             searchViewModel.setEmptyBookList(it.isEmpty())
         })
@@ -245,6 +245,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(){
         bookListView.adapter?.let {
             if (it is BookListAdapter) {
                 it.itemViewType = viewType
+            }
+        }
+    }
+
+    // 뒤로 가기
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.b_back -> {
+                activity?.onBackPressed()
             }
         }
     }

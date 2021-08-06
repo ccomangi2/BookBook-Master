@@ -21,9 +21,62 @@
         android:background="@color/white"
         tools:context=".view.fragment.MainFragment">
 
-        <include
-            android:id="@+id/layout_toolbar_main"
-            layout="@layout/layout_toolbar_main" />
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:background="#3CCBDA">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="#3CCBDA">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="#3CCBDA">
+
+                    <ImageButton
+                        android:id="@+id/b_wishView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        android:onClick="@{clickListener}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_favorite" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_logo"
+                        android:layout_width="100dp"
+                        android:layout_height="30dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/b_searchView"
+                        app:layout_constraintStart_toEndOf="@+id/b_wishView"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/bookbook_title_logo" />
+
+                    <ImageButton
+                        android:id="@+id/b_searchView"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:adjustViewBounds="true"
+                        android:background="#00000000"
+                        android:onClick="@{clickListener}"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/search_main" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textView2"

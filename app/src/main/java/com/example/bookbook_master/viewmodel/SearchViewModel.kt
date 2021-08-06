@@ -9,7 +9,6 @@ import com.example.bookbook_master.adapter.BookListAdapter
 import com.example.bookbook_master.adapter.callback.OnSearchActionListener
 import com.example.bookbook_master.model.data.BookRepository
 import com.example.bookbook_master.model.data.Document
-import com.example.bookbook_master.view.fragment.SearchFragment
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.coroutines.*
 import kotlin.concurrent.thread
