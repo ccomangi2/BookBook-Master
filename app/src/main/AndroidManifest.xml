@@ -11,6 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/book_logo_round"
         android:supportsRtl="true"
+        android:configChanges="orientation|screenSize"
         android:theme="@style/Theme.NoActionBar">
         <activity android:name=".view.activity.MainActivity">
             <intent-filter>
