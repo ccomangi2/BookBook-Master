@@ -57,7 +57,7 @@
                         android:id="@+id/tv_book_title_bar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/light"
+                        android:fontFamily="@font/medium"
                         android:textColor="#000000"
                         android:textSize="20sp"
                         android:text="위시리스트"
@@ -65,6 +65,20 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/b_delete"
+                        android:layout_width="25dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:adjustViewBounds="true"
+                        android:background="#00000000"
+                        android:onClick="@{clickListener}"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/trash" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.appbar.MaterialToolbar>
 

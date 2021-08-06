@@ -1,13 +1,11 @@
 package com.example.bookbook_master.model.roomDB.entity
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
+import androidx.room.*
 import com.example.bookbook_master.model.data.Document
+import org.jetbrains.annotations.Nullable
 
 @Entity(tableName = "recent")
 data class Recent(
-    @PrimaryKey(autoGenerate = true) var index: Int
-){
-    constructor(): this(0)
-}
+    @PrimaryKey(autoGenerate = true) var index: Int,
+    @Embedded(prefix = "recent_") var document: Document
+)

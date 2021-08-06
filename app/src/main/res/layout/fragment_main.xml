@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.bookbook_master.viewmodel.SearchViewModel" />
+            type="com.example.bookbook_master.viewmodel.MainViewModel" />
 
         <variable
             name="clickListener"
@@ -112,7 +112,6 @@
             android:text="최근 본 상품이 없습니다."
             android:textColor="#979797"
             android:visibility="gone"
-            app:visibleOrGone="@{viewModel.isEmptyBookList}"
             tools:visibility="visible" />
 
 

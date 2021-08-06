@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bookbook_master.adapter.callback.OnBookClickListener
 import com.example.bookbook_master.databinding.ItemImageTypeBookBinding
 import com.example.bookbook_master.model.data.Document
+import com.example.bookbook_master.model.roomDB.entity.Recent
 
 /**
  * 이미지 타입 도서 뷰홀더 (사실상 둘 다 똑같음)
@@ -15,6 +16,12 @@ class BookImageTypeViewHolder(private val binding: ItemImageTypeBookBinding) : R
 
     fun bind(document: Document) {
         binding.document = document
+        binding.executePendingBindings()
+    }
+
+    // 최근 본 상품
+    fun recent_bind(recent: Recent) {
+        binding.document = recent.document
         binding.executePendingBindings()
     }
 
