@@ -5,8 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.bookbook_master.model.data.Document
 import com.example.bookbook_master.model.roomDB.dao.RecentDAO
 import com.example.bookbook_master.model.roomDB.entity.Recent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Database(entities = [Recent::class], version = 1, exportSchema = false)
 @TypeConverters(MyConverters::class)
@@ -24,10 +29,30 @@ abstract class AppDatabase : RoomDatabase() {
                         context.applicationContext,
                         AppDatabase::class.java,
                         "database-recent"
-                    ).build()
+                    )
+//                        .addCallback(object : RoomDatabase.Callback(){
+//                        override fun onCreate(db: SupportSQLiteDatabase) {
+//                            super.onCreate(db)
+//                            fillInDb(context.applicationContext)
+//                        }
+//                    })
+                        .build()
                 }
             }
             return instance
         }
+//        // 데이터 미리 채우기
+//        fun fillInDb(context: Context){
+//            CoroutineScope(Dispatchers.IO).launch {
+//                getInstance(context)!!.recentDao().addRecentDb(
+//                    USER_DATA
+//                )
+//            }
+//        }
     }
 }
+lateinit var document: Document
+private val USER_DATA = arrayListOf(
+    Recent(0,document),
+    Recent(0,document)
+)

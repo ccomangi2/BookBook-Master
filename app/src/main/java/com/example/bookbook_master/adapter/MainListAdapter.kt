@@ -26,7 +26,8 @@ class MainListAdapter(var itemViewType: Int, private val bookClickListener: OnBo
         // 둘이 똑같은 뷰 - 나중을 위해 구분해 둠
         const val TEXT_VIEW_TYPE = 1
         const val IMAGE_VIEW_TYPE = 2
-        private val items = ArrayList<Recent>()
+
+        private var recentList = emptyList<Recent>()
     }
 
     // 뷰홀더가 생성되는 함수
@@ -42,24 +43,26 @@ class MainListAdapter(var itemViewType: Int, private val bookClickListener: OnBo
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is BookTextTypeViewHolder -> {
-                holder?.recent_bind(items[position])
-                holder?.item_number(position+1)
+                holder.recent_bind(recentList[position])
+                holder.item_number(position+1)
             }
 
             is BookImageTypeViewHolder -> {
-                holder?.recent_bind(items[position])
-                holder?.item_number(position+1)
+                holder.recent_bind(recentList[position])
+                holder.item_number(position+1)
             }
         }
     }
 
+    // 리스트 개수 리턴
     override fun getItemCount(): Int {
-        return items.size
+        return recentList.size
     }
 
-    fun setList(todo: List<Recent>) {
-        items.clear()
-        items.addAll(todo)
+    // 리스트 갱신
+    fun setData(recent: List<Recent>) {
+        recentList = recent
+        notifyDataSetChanged()
     }
 
     // 뷰 타입 함수 (지금은 필요없는 함수)

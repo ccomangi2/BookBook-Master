@@ -5,26 +5,22 @@ import androidx.lifecycle.LiveData
 import com.example.bookbook_master.model.roomDB.AppDatabase
 import com.example.bookbook_master.model.roomDB.dao.RecentDAO
 import com.example.bookbook_master.model.roomDB.entity.Recent
+import kotlinx.coroutines.flow.Flow
+import java.lang.Exception
 
-class RecentRepository(application: Application) {
-    private val recentDao: RecentDAO
-    private val recentList: LiveData<List<Recent>>
+class RecentRepository(private val recentDAO: RecentDAO) {
 
-    init {
-        var db = AppDatabase.getInstance(application)
-        recentDao = db!!.recentDao()
-        recentList = db.recentDao().getAll()
+    val readAllData : Flow<List<Recent>> = recentDAO.readAllData()
+
+    suspend fun addRecent(recent: Recent){
+        recentDAO.addRecent(recent)
     }
 
-    fun insert(recent: Recent) {
-        recentDao.insert(recent)
+    suspend fun updateRecent(recent : Recent){
+        recentDAO.updateRecent(recent)
     }
 
-    fun delete(recent: Recent){
-        recentDao.delete(recent)
-    }
-
-    fun getAll(): LiveData<List<Recent>> {
-        return recentDao.getAll()
+    suspend fun deleteRecent(recent : Recent){
+        recentDAO.deleteRecent(recent)
     }
 }

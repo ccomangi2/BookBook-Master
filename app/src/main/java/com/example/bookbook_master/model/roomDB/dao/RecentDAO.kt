@@ -3,21 +3,22 @@ package com.example.bookbook_master.model.roomDB.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.bookbook_master.model.roomDB.entity.Recent
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RecentDAO {
-    @Query("SELECT * FROM recent")
-    fun getAll(): LiveData<List<Recent>>
+    @Insert
+    suspend fun addRecent(recent: Recent)
 
     @Insert
-    fun insertAll(vararg recent: Recent)
-
-    @Insert
-    fun insert(recent: Recent)
+    suspend fun addRecentDb(recents : List<Recent>)
 
     @Update
-    fun update(recent: Recent)
+    suspend fun updateRecent(recent : Recent)
 
     @Delete
-    fun delete(recent: Recent)
+    suspend fun deleteRecent(recent : Recent)
+
+    @Query("SELECT * FROM recent ORDER BY id ASC")
+    fun readAllData() : Flow<List<Recent>>
 }

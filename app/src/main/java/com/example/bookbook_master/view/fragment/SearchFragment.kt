@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookbook_master.R
 import com.example.bookbook_master.adapter.BookListAdapter
+import com.example.bookbook_master.adapter.MainListAdapter
 import com.example.bookbook_master.adapter.callback.OnBookClickListener
 import com.example.bookbook_master.databinding.FragmentSearchBinding
 import com.example.bookbook_master.model.data.Document
@@ -40,7 +41,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListen
     }
 
     private val searchViewModel: SearchViewModel by viewModel()
-    private val mainViewModel: MainViewModel by viewModel()
+    private val mainViewModel : MainViewModel by lazy { MainViewModel(requireNotNull(this.activity).application) }
 
     private lateinit var bookListAdapter: BookListAdapter
     private var currentListViewType = DEFAULT_VIEW_TYPE
@@ -49,7 +50,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListen
     private val bookClickListener = object : OnBookClickListener {
         override fun onClickBook(document: Document) {
              // 도서 상세 화면으로 이동
-            //mainViewModel.insert(Recent(0,document))
+            val recent = Recent(0, document)
+            mainViewModel.addRecent(recent)
+            Log.d("DB","상품 정보 : $recent")
             requireActivity().supportFragmentManager.beginTransaction()
                 .add(R.id.container, DetailFragment.newInstance(document))
                 .addToBackStack(null)
