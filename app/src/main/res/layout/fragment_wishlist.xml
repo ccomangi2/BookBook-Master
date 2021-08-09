@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.bookbook_master.viewmodel.SearchViewModel" />
+            type="com.example.bookbook_master.viewmodel.WishViewModel" />
 
         <variable
             name="clickListener"
@@ -19,7 +19,7 @@
         android:fitsSystemWindows="true"
         android:focusableInTouchMode="true"
         android:background="@color/white"
-        tools:context=".view.fragment.SearchFragment">
+        tools:context=".view.fragment.WishFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar_layout"
@@ -94,7 +94,7 @@
             android:paddingBottom="4dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:listitem="@layout/item_text_type_book" />
+            tools:listitem="@layout/item_wish_type_book" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/appCompatTextView"

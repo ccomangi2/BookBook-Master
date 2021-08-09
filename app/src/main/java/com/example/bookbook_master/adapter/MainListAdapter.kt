@@ -1,26 +1,15 @@
 package com.example.bookbook_master.adapter
 
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bookbook_master.R
-import com.example.bookbook_master.adapter.callback.BookListDiffCallback
 import com.example.bookbook_master.adapter.callback.OnBookClickListener
 import com.example.bookbook_master.adapter.callback.RecentBookListDiffCallback
-import com.example.bookbook_master.adapter.viewholder.BookImageTypeViewHolder
 import com.example.bookbook_master.adapter.viewholder.BookRecentTypeViewHolder
-import com.example.bookbook_master.adapter.viewholder.BookTextTypeViewHolder
-import com.example.bookbook_master.model.data.Document
-import com.example.bookbook_master.model.roomDB.AppDatabase
 import com.example.bookbook_master.model.roomDB.entity.Recent
-import com.example.bookbook_master.view.fragment.MainFragment
-import kotlinx.android.synthetic.main.item_text_type_book.view.*
 
 /**
- * 도서 리스트 어댑터
+ * 도서 리스트 어댑터 - 메인 화면
  * @author philippe
  */
 class MainListAdapter(var itemViewType: Int, private val bookClickListener: OnBookClickListener) :

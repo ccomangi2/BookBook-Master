@@ -24,7 +24,7 @@ class SearchViewModel(private val bookRepository: BookRepository) : BaseViewMode
         private var searchBookJob = Job()
 
         //뷰 타입을 이미지뷰타입으로 설정
-        private val _bookListViewType = MutableLiveData(BookListAdapter.IMAGE_VIEW_TYPE)
+        private val _bookListViewType = MutableLiveData(BookListAdapter.SEARCH_VIEW_TYPE)
         val bookListViewType: LiveData<Int> = _bookListViewType
 
         //검색어

@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookbook_master.adapter.callback.OnBookClickListener
-import com.example.bookbook_master.databinding.ItemImageTypeBookBinding
 import com.example.bookbook_master.databinding.ItemRecentTypeBookBinding
 import com.example.bookbook_master.model.data.Document
 import com.example.bookbook_master.model.roomDB.entity.Recent

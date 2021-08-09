@@ -4,15 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookbook_master.adapter.callback.OnBookClickListener
-import com.example.bookbook_master.databinding.ItemTextTypeBookBinding
+import com.example.bookbook_master.databinding.ItemSearchTypeBookBinding
 import com.example.bookbook_master.model.data.Document
-import com.example.bookbook_master.model.roomDB.entity.Recent
 
 /**
- * 텍스트 타입 도서 뷰홀더 (사실상 둘 다 똑같음)
+ * 이미지 타입 도서 뷰홀더 (사실상 둘 다 똑같음)
  * @author philippe
  */
-class BookTextTypeViewHolder(private val binding: ItemTextTypeBookBinding) : RecyclerView.ViewHolder(binding.root) {
+class BookSearchTypeViewHolder(private val binding: ItemSearchTypeBookBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(document: Document) {
         binding.document = document
@@ -25,11 +24,11 @@ class BookTextTypeViewHolder(private val binding: ItemTextTypeBookBinding) : Rec
     }
 
     companion object {
-        fun from(parent: ViewGroup, bookClickListener: OnBookClickListener): BookTextTypeViewHolder {
+        fun from(parent: ViewGroup, bookClickListener: OnBookClickListener): BookSearchTypeViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            val binding = ItemTextTypeBookBinding.inflate(layoutInflater, parent, false)
+            val binding = ItemSearchTypeBookBinding.inflate(layoutInflater, parent, false)
             binding.bookClickListener = bookClickListener
-            return BookTextTypeViewHolder(binding)
+            return BookSearchTypeViewHolder(binding)
         }
     }
 }

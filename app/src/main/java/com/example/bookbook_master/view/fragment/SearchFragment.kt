@@ -36,7 +36,7 @@ import kotlin.concurrent.thread
  */
 class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListener {
     companion object {
-        private const val DEFAULT_VIEW_TYPE = BookListAdapter.IMAGE_VIEW_TYPE
+        private const val DEFAULT_VIEW_TYPE = BookListAdapter.SEARCH_VIEW_TYPE
 
         @JvmStatic
         fun newInstance() = SearchFragment()
@@ -44,7 +44,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListen
 
     private val searchViewModel: SearchViewModel by viewModel()
     private val mainViewModel : MainViewModel by viewModel()
-    private val detailViewModel: DetailViewModel by sharedViewModel()
 
     private lateinit var bookListAdapter: BookListAdapter
     private var currentListViewType = DEFAULT_VIEW_TYPE
@@ -72,30 +71,33 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListen
     }
 
     override fun initView(viewDataBinding: FragmentSearchBinding) {
+        // 뷰모델
         viewDataBinding.viewModel = searchViewModel
+        // 어댑터 연결
+        viewDataBinding.rvBookList.adapter = bookListAdapter
+        // 클릭리스너
         viewDataBinding.clickListener = this
-        initBookListView(viewDataBinding.rvBookList, DEFAULT_VIEW_TYPE, bookListAdapter)
+        // 스크롤
         initBookListScrollListener(viewDataBinding.rvBookList)
 
+        // 뷰 타입 변경
         searchViewModel.bookListViewType.observe(this@SearchFragment, {
             currentListViewType = it
             setListViewType(viewDataBinding.rvBookList, it)
         })
 
+        // 리스트 불러오기
         searchViewModel.mainBookList.observe(this, {
             hideKeyboard(viewDataBinding.etSearchKeyword)
             bookListAdapter.submitList(it)
             searchViewModel.setEmptyBookList(it.isEmpty())
         })
 
+        // 네트워크 오류
         searchViewModel.showNetworkError.observe(this, { _ ->
             activity?.let {
                 showAlertDialog(it, getString(R.string.message_network_error))
             }
-        })
-
-        detailViewModel.sharedDocument.observe(this, {
-            updateDocument(it)
         })
 
         // 검색 버튼 클릭 시
@@ -142,26 +144,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListen
     }
 
     /**
-     * 도서 목록 리스트 초기화
-     * @param bookListView 도서 리스트뷰
-     * @param viewType 리스트뷰 뷰타입 (TEXT, IMAGE)
-     * @param bookListAdapter 도서 리스트 어댑터
-     */
-    private fun initBookListView(bookListView: RecyclerView, viewType: Int, bookListAdapter: BookListAdapter) {
-        when (viewType) {
-            BookListAdapter.TEXT_VIEW_TYPE -> {
-                //검색 결과 목록은 3xN  Grid Recyclerview 로 나타납니다.
-                bookListView.layoutManager = GridLayoutManager(bookListView.context, 3)
-            }
-            BookListAdapter.IMAGE_VIEW_TYPE -> {
-                bookListView.layoutManager = GridLayoutManager(bookListView.context, 3)
-            }
-        }
-
-        bookListView.adapter = bookListAdapter
-    }
-
-    /**
      * 도서 리스트뷰 스크롤 리스너 초기화
      * @param bookListView 도서 리스트뷰
      */
@@ -172,10 +154,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListen
 
                 recyclerView.adapter?.let {
                     val layoutManager = when (currentListViewType) {
-                        BookListAdapter.TEXT_VIEW_TYPE -> {
-                            (bookListView.layoutManager as GridLayoutManager)
-                        }
-                        BookListAdapter.IMAGE_VIEW_TYPE -> {
+                        BookListAdapter.SEARCH_VIEW_TYPE -> {
                             (bookListView.layoutManager as GridLayoutManager)
                         }
                         else -> (bookListView.layoutManager as GridLayoutManager)
@@ -263,10 +242,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListen
      */
     private fun setListViewType(bookListView: RecyclerView, viewType: Int) {
         when (viewType) {
-            BookListAdapter.TEXT_VIEW_TYPE -> {
-                bookListView.layoutManager = GridLayoutManager(bookListView.context, 3)
-            }
-            BookListAdapter.IMAGE_VIEW_TYPE -> {
+            BookListAdapter.SEARCH_VIEW_TYPE -> {
                 bookListView.layoutManager = GridLayoutManager(bookListView.context, 3)
             }
         }

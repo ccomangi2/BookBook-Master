@@ -61,27 +61,29 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), View.OnClickListener {
     override fun initView(viewDataBinding: FragmentMainBinding) {
         // 뷰모델
         viewDataBinding.viewModel = mainViewModel
-
+        // 어댑터 연결
         viewDataBinding.rvLookBookList.adapter = mainListAdapter
+        // 클릭리스너
+        viewDataBinding.clickListener = this
 
         // 데이터 불러오기
         mainViewModel.getAll().observe(this, Observer {
-            Log.d("data", it.toString())
+            Log.d("recent_data", it.toString())
             mainListAdapter.setData(it)
             mainListAdapter.notifyDataSetChanged()
         })
 
+        // 뷰타입 설정
         mainViewModel.bookListViewType.observe(this@MainFragment, {
             currentListViewType = it
             setListViewType(viewDataBinding.rvLookBookList, it)
         })
-        viewDataBinding.clickListener = this
     }
 
     /**
      * 도서 리스트 뷰타입 변경
      * @param bookListView 도서 리스트뷰
-     * @param viewType 리스트뷰 뷰타입 (TEXT, IMAGE)
+     * @param viewType 리스트뷰 뷰타입
      */
     private fun setListViewType(bookListView: RecyclerView, viewType: Int) {
         when (viewType) {

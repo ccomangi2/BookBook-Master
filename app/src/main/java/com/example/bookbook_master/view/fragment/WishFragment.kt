@@ -2,17 +2,27 @@ package com.example.bookbook_master.view.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.bookbook_master.R
 import com.example.bookbook_master.adapter.BookListAdapter
+import com.example.bookbook_master.adapter.MainListAdapter
+import com.example.bookbook_master.adapter.WishListAdapter
 import com.example.bookbook_master.adapter.callback.OnBookClickListener
 import com.example.bookbook_master.databinding.FragmentDetailBinding
 import com.example.bookbook_master.databinding.FragmentMainBinding
 import com.example.bookbook_master.databinding.FragmentWishlistBinding
 import com.example.bookbook_master.model.data.Document
+import com.example.bookbook_master.model.roomDB.entity.Recent
 import com.example.bookbook_master.viewmodel.DetailViewModel
+import com.example.bookbook_master.viewmodel.MainViewModel
 import com.example.bookbook_master.viewmodel.SearchViewModel
+import com.example.bookbook_master.viewmodel.WishViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -21,22 +31,26 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListener {
     companion object {
-        private const val DEFAULT_VIEW_TYPE = BookListAdapter.TEXT_VIEW_TYPE
+        private const val DEFAULT_VIEW_TYPE = WishListAdapter.WISH_VIEW_TYPE
 
         @JvmStatic
         fun newInstance() = WishFragment()
     }
 
     // 뷰모델 변경 해야함
-    private val searchViewModel: SearchViewModel by viewModel()
+    private val wishViewModel: WishViewModel by viewModel()
+    private val mainViewModel : MainViewModel by viewModel()
 
     // 어댑터 변경 해야함
-    private lateinit var bookListAdapter: BookListAdapter
+    private lateinit var wishListAdapter: WishListAdapter
     private var currentListViewType = DEFAULT_VIEW_TYPE
 
     private val bookClickListener = object : OnBookClickListener {
         override fun onClickBook(document: Document) {
             // 도서 상세 화면으로 이동
+            // 로컬 디비에 저장 ( 최근 본 상품 )
+            val recent = Recent(0, document)
+            mainViewModel.addRecent(recent)
             requireActivity().supportFragmentManager.beginTransaction()
                 .add(R.id.container, DetailFragment.newInstance(document))
                 .addToBackStack(null)
@@ -47,13 +61,47 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
     override fun getLayoutRes(): Int = R.layout.fragment_wishlist
 
     override fun initData() {
-        bookListAdapter = BookListAdapter(DEFAULT_VIEW_TYPE, bookClickListener)
+        wishListAdapter = WishListAdapter(DEFAULT_VIEW_TYPE, bookClickListener)
     }
 
     override fun initView(viewDataBinding: FragmentWishlistBinding) {
-        // 수정 필요
-        viewDataBinding.viewModel = searchViewModel
+        // 뷰 모델
+        viewDataBinding.viewModel = wishViewModel
+        // 어댑터 연결
+        viewDataBinding.rvWishBookList.adapter = wishListAdapter
+        // 클릭 리스너
         viewDataBinding.clickListener = this
+
+        // 데이터 불러오기
+//        wishViewModel.getAll().observe(this, Observer {
+//            Log.d("wish_data", it.toString())
+//            wishListAdapter.setData(it)
+//            wishListAdapter.notifyDataSetChanged()
+//        })
+
+        // 뷰타입 설정
+        wishViewModel.bookListViewType.observe(this@WishFragment, {
+            currentListViewType = it
+            setListViewType(viewDataBinding.rvWishBookList, it)
+        })
+    }
+
+    /**
+     * 도서 리스트 뷰타입 변경
+     * @param bookListView 도서 리스트뷰
+     * @param viewType 리스트뷰 뷰타입
+     */
+    private fun setListViewType(bookListView: RecyclerView, viewType: Int) {
+        when (viewType) {
+            WishListAdapter.WISH_VIEW_TYPE -> {
+                bookListView.layoutManager = GridLayoutManager(bookListView.context, 3)
+            }
+        }
+        bookListView.adapter?.let {
+            if (it is WishListAdapter) {
+                it.itemViewType = viewType
+            }
+        }
     }
 
     override fun onClick(v: View?) {
