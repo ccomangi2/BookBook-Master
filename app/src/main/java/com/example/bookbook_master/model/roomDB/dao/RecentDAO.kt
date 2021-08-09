@@ -3,7 +3,6 @@ package com.example.bookbook_master.model.roomDB.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.bookbook_master.model.roomDB.entity.Recent
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RecentDAO {
@@ -20,5 +19,5 @@ interface RecentDAO {
     suspend fun deleteRecent(recent : Recent)
 
     @Query("SELECT * FROM recent ORDER BY id ASC")
-    fun readAllData() : Flow<List<Recent>>
+    fun getAll() : LiveData<List<Recent>>
 }

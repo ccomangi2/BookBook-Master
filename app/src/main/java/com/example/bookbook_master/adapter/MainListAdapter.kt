@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.item_text_type_book.view.*
 class MainListAdapter(var itemViewType: Int, private val bookClickListener: OnBookClickListener) :
     ListAdapter<Recent, RecyclerView.ViewHolder>(RecentBookListDiffCallback()) {
 
-    private var recentList = emptyList<Recent>()
+    private var recentList = ArrayList<Recent>()
 
     companion object {
         const val RECENT_VIEW_TYPE = 3
@@ -44,7 +44,7 @@ class MainListAdapter(var itemViewType: Int, private val bookClickListener: OnBo
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is BookRecentTypeViewHolder -> {
-                holder.bind(getItem(position))
+                holder.bind(recentList[position])
                 holder.item_number(position+1)
             }
         }
@@ -52,12 +52,16 @@ class MainListAdapter(var itemViewType: Int, private val bookClickListener: OnBo
 
     // 리스트 갱신
     fun setData(recent : List<Recent>){
-        recentList = recent
-        notifyDataSetChanged()
+        recentList.clear()
+        recentList.addAll(recent)
     }
 
     // 뷰 타입 함수 (지금은 필요없는 함수)
     override fun getItemViewType(position: Int): Int {
         return itemViewType
+    }
+
+    override fun getItemCount(): Int {
+        return recentList.size
     }
 }

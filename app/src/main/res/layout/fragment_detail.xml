@@ -91,7 +91,9 @@
                         android:layout_height="?attr/actionBarSize"
                         android:background="@null"
                         android:foreground="?android:attr/selectableItemBackground"
+                        android:onClick="@{() -> viewModel.onClickFavorite()}"
                         android:src="@drawable/ic_favorite_off_24"
+                        app:isFavoriteBook="@{viewModel.isFavorite}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

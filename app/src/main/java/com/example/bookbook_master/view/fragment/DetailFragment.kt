@@ -2,6 +2,8 @@ package com.example.bookbook_master.view.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.bookbook_master.R
 import com.example.bookbook_master.databinding.FragmentDetailBinding
 import com.example.bookbook_master.model.data.Document

@@ -16,20 +16,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
-import org.jetbrains.annotations.NotNull
 
-class MainViewModel(private val application: Application) : ViewModel() {
-    val readAllData : LiveData<List<Recent>>
-    private val repository : RecentRepository
+class MainViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository = RecentRepository(application)
+    private val items = repository.getAll()
+
 
     //뷰 타입을 이미지뷰타입으로 설정
     private val _bookListViewType = MutableLiveData(MainListAdapter.RECENT_VIEW_TYPE)
     val bookListViewType: LiveData<Int> = _bookListViewType
 
-    init {
-        val userDao = AppDatabase.getInstance(application)!!.recentDao()
-        repository = RecentRepository(userDao)
-        readAllData = repository.readAllData?.asLiveData()!!
+
+    fun getAll(): LiveData<List<Recent>> {
+        return items
     }
 
     fun addRecent(recent: Recent){
@@ -37,7 +36,6 @@ class MainViewModel(private val application: Application) : ViewModel() {
             repository.addRecent(recent)
         }
     }
-
 
     // 리소스 정리
     override fun onCleared() {

@@ -20,6 +20,7 @@ import com.example.bookbook_master.databinding.FragmentSearchBinding
 import com.example.bookbook_master.model.data.Document
 import com.example.bookbook_master.model.roomDB.entity.Recent
 import com.example.bookbook_master.view.activity.MainActivity
+import com.example.bookbook_master.viewmodel.DetailViewModel
 import com.example.bookbook_master.viewmodel.MainViewModel
 import com.example.bookbook_master.viewmodel.SearchViewModel
 import kotlinx.android.synthetic.main.fragment_search.*
@@ -43,6 +44,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListen
 
     private val searchViewModel: SearchViewModel by viewModel()
     private val mainViewModel : MainViewModel by viewModel()
+    private val detailViewModel: DetailViewModel by sharedViewModel()
 
     private lateinit var bookListAdapter: BookListAdapter
     private var currentListViewType = DEFAULT_VIEW_TYPE
@@ -50,7 +52,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListen
     //DB
     private val bookClickListener = object : OnBookClickListener {
         override fun onClickBook(document: Document) {
-             // 도서 상세 화면으로 이동
+            // 도서 상세 화면으로 이동
+            // 로컬 디비에 저장 ( 최근 본 상품 )
             val recent = Recent(0, document)
             mainViewModel.addRecent(recent)
             Log.d("DB","상품 정보 : $recent")
@@ -89,6 +92,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListen
             activity?.let {
                 showAlertDialog(it, getString(R.string.message_network_error))
             }
+        })
+
+        detailViewModel.sharedDocument.observe(this, {
+            updateDocument(it)
         })
 
         // 검색 버튼 클릭 시
@@ -198,6 +205,22 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListen
                 }
             }
         })
+    }
+
+    /**
+     * 특정 도서 정보 갱신 (상세 화면에서 좋아요 선택시)
+     */
+    private fun updateDocument(document: Document) {
+        bookListAdapter.currentList.run {
+            for (i in 0 until this.size) {
+                val curDocument = this[i]
+                if (curDocument.isbn == document.isbn) {
+                    curDocument.isFavorite = document.isFavorite
+                    bookListAdapter.notifyItemChanged(i)
+                    break
+                }
+            }
+        }
     }
 
     /**

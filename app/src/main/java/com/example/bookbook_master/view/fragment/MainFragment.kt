@@ -1,5 +1,6 @@
 package com.example.bookbook_master.view.fragment
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +16,7 @@ import com.example.bookbook_master.adapter.callback.OnBookClickListener
 import com.example.bookbook_master.databinding.FragmentMainBinding
 import com.example.bookbook_master.model.data.Document
 import com.example.bookbook_master.model.roomDB.dao.RecentDAO
+import com.example.bookbook_master.model.roomDB.entity.Recent
 import com.example.bookbook_master.model.roomDB.repository.RecentRepository
 import com.example.bookbook_master.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -40,6 +42,9 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), View.OnClickListener {
     private val bookClickListener = object : OnBookClickListener {
         override fun onClickBook(document: Document) {
             // 도서 상세 화면으로 이동
+            // 로컬 디비에 저장 ( 최근 본 상품 )
+            val recent = Recent(0, document)
+            mainViewModel.addRecent(recent)
             requireActivity().supportFragmentManager.beginTransaction()
                 .add(R.id.container, DetailFragment.newInstance(document))
                 .addToBackStack(null)
@@ -49,7 +54,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), View.OnClickListener {
 
     override fun getLayoutRes(): Int = R.layout.fragment_main
 
-
     override fun initData() {
         mainListAdapter = MainListAdapter(DEFAULT_VIEW_TYPE, bookClickListener)
     }
@@ -58,8 +62,13 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), View.OnClickListener {
         // 뷰모델
         viewDataBinding.viewModel = mainViewModel
 
-        mainViewModel.readAllData.observe(this, Observer { recent ->
-            recent.let { mainListAdapter.submitList(it) }
+        viewDataBinding.rvLookBookList.adapter = mainListAdapter
+
+        // 데이터 불러오기
+        mainViewModel.getAll().observe(this, Observer {
+            Log.d("data", it.toString())
+            mainListAdapter.setData(it)
+            mainListAdapter.notifyDataSetChanged()
         })
 
         mainViewModel.bookListViewType.observe(this@MainFragment, {
@@ -83,7 +92,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), View.OnClickListener {
 
         bookListView.adapter?.let {
             if (it is MainListAdapter) {
-                it.itemViewType = R.layout.item_recent_type_book
+                it.itemViewType = viewType
             }
         }
     }

@@ -113,7 +113,5 @@
             android:textColor="#979797"
             android:visibility="gone"
             tools:visibility="visible" />
-
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
