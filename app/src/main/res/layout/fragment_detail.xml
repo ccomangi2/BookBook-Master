@@ -156,7 +156,6 @@
                             android:layout_width="350dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="100dp"
-                            android:layout_marginEnd="10dp"
                             android:fontFamily="@font/bold"
                             android:text="@{viewModel.document.title}"
                             android:textColor="#FFFFFF"
@@ -168,87 +167,100 @@
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_book_date"
-                            android:layout_width="wrap_content"
+                            android:layout_width="350dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
                             android:layout_marginTop="15dp"
                             android:fontFamily="@font/medium"
                             android:textColor="#FFFFFF"
                             app:dateTimeText="@{viewModel.document.datetime}"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/tv_book_title"
                             tools:text="2020.20.20" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="20dp"
-                            android:fontFamily="@font/medium"
-                            android:text="출판  |"
-                            android:textColor="#FFFFFF"
-                            android:textSize="18sp"
+                        <LinearLayout
+                            android:id="@+id/linearLayout"
+                            android:layout_width="350dp"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_book_date" />
+                            app:layout_constraintTop_toBottomOf="@+id/tv_book_date">
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_book_publisher"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="20dp"
-                            android:fontFamily="@font/medium"
-                            android:text="@{viewModel.document.publisher}"
-                            android:textColor="#FFFFFF"
-                            android:textSize="18sp"
-                            app:layout_constraintStart_toEndOf="@+id/textView"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_book_date"
-                            tools:text="출판사임" />
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/textView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:fontFamily="@font/medium"
+                                android:text="출판  |"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18sp" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/textView1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:fontFamily="@font/medium"
-                            android:text="저자  |"
-                            android:textColor="#FFFFFF"
-                            android:textSize="18sp"
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_book_publisher"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="20dp"
+                                android:fontFamily="@font/medium"
+                                android:text="@{viewModel.document.publisher}"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18sp"
+                                tools:text="출판사임" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout2"
+                            android:layout_width="350dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView" />
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_book_authors"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:fontFamily="@font/medium"
-                            android:textColor="#FFFFFF"
-                            android:textSize="18sp"
-                            app:bookAuthors="@{viewModel.document.authors}"
-                            app:layout_constraintStart_toEndOf="@+id/textView"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_book_publisher"
-                            tools:text="저자명입니다." />
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/textView1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/medium"
+                                android:text="저자  |"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18sp" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_book_authors"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:fontFamily="@font/medium"
+                                android:textColor="#FFFFFF"
+                                android:textSize="18sp"
+                                app:bookAuthors="@{viewModel.document.authors}"
+                                tools:text="저자명입니다." />
+                        </LinearLayout>
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_book_price"
-                            android:layout_width="wrap_content"
+                            android:layout_width="350dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
-                            android:layout_marginEnd="20dp"
                             android:fontFamily="@font/medium"
-                            android:text="@{@string/format_sale_price(viewModel.document.price)}"
+                            android:gravity="right"
+                            android:text="@{@string/format_price(viewModel.document.price)}"
                             android:textColor="#FFFFFF"
                             android:textSize="24sp"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_book_title" />
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_book_title"
+                            tools:text="20000원" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_book_detail"
                             android:layout_width="350dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="25dp"
+                            android:layout_marginTop="30dp"
                             android:layout_marginBottom="50dp"
                             android:fontFamily="@font/medium"
                             android:text="@{viewModel.document.contents}"
@@ -257,7 +269,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_book_authors"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
                             tools:text="설명설명설명설명설명설명" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,7 @@
     <string name="app_name">BookBook</string>
 
     <string name="hint_search_book_title">책 제목을 입력하세요.</string>
-    <string name="format_sale_price">%,d원</string>
+    <string name="format_price">%,d원</string>
     <string name="title_book_detail">책 설명</string>
     <string name="title_book_info">책 정보</string>
 

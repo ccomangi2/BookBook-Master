@@ -15,13 +15,13 @@ import com.example.bookbook_master.model.roomDB.entity.Wish
 class BookWishTypeViewHolder(private val binding: ItemWishTypeBookBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(wish: Wish) {
-        binding.document = wish.document
+        binding.wish = wish
         binding.executePendingBindings()
     }
 
     fun item_number(position: Int) {
-        binding.document?.item_number = position.toString()
-        binding.tvItemNumber.text = binding.document?.item_number
+        binding.wish?.id = position
+        binding.tvItemNumber.text = binding.wish?.id.toString()
     }
 
     companion object {

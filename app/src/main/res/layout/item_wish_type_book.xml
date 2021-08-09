@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="document"
-            type="com.example.bookbook_master.model.data.Document" />
+            name="wish"
+            type="com.example.bookbook_master.model.roomDB.entity.Wish" />
 
         <variable
             name="bookClickListener"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:foreground="?android:attr/selectableItemBackground"
             android:background="@color/white"
-            android:onClick="@{() -> bookClickListener.onClickBook(document)}">
+            android:onClick="@{() -> bookClickListener.onClickBook(wish.document)}">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_book_thumbnail"
@@ -37,7 +37,7 @@
                 android:background="@color/colorThumbnailBg"
                 android:scaleType="fitXY"
                 android:src="@drawable/wish_no_img"
-                app:imageUrl="@{document.thumbnail}"
+                app:imageUrl="@{wish.document.thumbnail}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="w,120:178"
                 app:layout_constraintEnd_toStartOf="@+id/tv_book_title"
@@ -53,7 +53,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/medium"
-                android:text="@{document.title}"
+                android:text="@{wish.document.title}"
                 android:textColor="@color/black"
                 android:textSize="25sp"
                 android:textStyle="bold"
@@ -74,7 +74,7 @@
                 android:ellipsize="none"
                 android:fontFamily="@font/medium"
                 android:maxLines="2"
-                android:text="@{document.title}"
+                android:text="@{wish.document.title}"
                 android:textColor="@color/colorPoint"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +89,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginBottom="30dp"
                 android:fontFamily="@font/medium"
-                android:text="@{@string/format_sale_price(document.salePrice)}"
+                android:text="@{@string/format_price(wish.document.price)}"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +107,7 @@
                 android:layout_marginBottom="30dp"
                 android:fontFamily="@font/medium"
                 android:textColor="@color/colorPoint"
-                app:dateTimeText="@{document.datetime}"
+                app:dateTimeText="@{wish.document.datetime}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
