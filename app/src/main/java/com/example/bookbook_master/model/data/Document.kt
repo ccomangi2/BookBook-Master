@@ -1,6 +1,7 @@
 package com.example.bookbook_master.model.data
 
 import android.os.Parcelable
+import com.example.bookbook_master.model.roomDB.entity.Recent
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 

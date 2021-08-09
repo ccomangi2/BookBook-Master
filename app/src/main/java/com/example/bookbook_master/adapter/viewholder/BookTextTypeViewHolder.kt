@@ -19,11 +19,6 @@ class BookTextTypeViewHolder(private val binding: ItemTextTypeBookBinding) : Rec
         binding.executePendingBindings()
     }
 
-    fun recent_bind(recent: Recent) {
-        binding.document = recent.document
-        binding.executePendingBindings()
-    }
-
     fun item_number(position: Int) {
         binding.document?.item_number = position.toString()
         binding.tvItemNumber.text = binding.document?.item_number

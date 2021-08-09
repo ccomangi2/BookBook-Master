@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import com.example.bookbook_master.BookBookApplication
 import com.example.bookbook_master.R
 import com.google.android.material.textfield.TextInputEditText
 import com.example.bookbook_master.view.fragment.MainFragment
+import com.example.bookbook_master.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

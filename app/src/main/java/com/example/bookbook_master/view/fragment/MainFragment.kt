@@ -1,6 +1,5 @@
 package com.example.bookbook_master.view.fragment
 
-import android.app.Application
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +14,10 @@ import com.example.bookbook_master.adapter.MainListAdapter
 import com.example.bookbook_master.adapter.callback.OnBookClickListener
 import com.example.bookbook_master.databinding.FragmentMainBinding
 import com.example.bookbook_master.model.data.Document
+import com.example.bookbook_master.model.roomDB.dao.RecentDAO
+import com.example.bookbook_master.model.roomDB.repository.RecentRepository
 import com.example.bookbook_master.viewmodel.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 /**
@@ -23,15 +25,15 @@ import java.util.*
  */
 class MainFragment : BaseFragment<FragmentMainBinding>(), View.OnClickListener {
     companion object {
-        private const val DEFAULT_VIEW_TYPE = BookListAdapter.IMAGE_VIEW_TYPE
+        private const val DEFAULT_VIEW_TYPE = MainListAdapter.RECENT_VIEW_TYPE
 
         @JvmStatic
         fun newInstance() = MainFragment()
     }
 
     // 뷰모델, 어댑터 변경 해야 함
-    private lateinit var mainViewModel : MainViewModel
-    private val adapter: MainListAdapter by lazy { MainListAdapter(DEFAULT_VIEW_TYPE, bookClickListener) }
+    private val mainViewModel : MainViewModel by viewModel()
+    private lateinit var mainListAdapter: MainListAdapter
     private var currentListViewType = DEFAULT_VIEW_TYPE
 
     //DB
@@ -49,22 +51,22 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), View.OnClickListener {
 
 
     override fun initData() {
-        adapter
+        mainListAdapter = MainListAdapter(DEFAULT_VIEW_TYPE, bookClickListener)
     }
 
     override fun initView(viewDataBinding: FragmentMainBinding) {
-        // 뷰모델 연결
-        mainViewModel = ViewModelProvider(this, MainViewModel.Factory(requireNotNull(this.activity).application)).get(MainViewModel::class.java)
-        viewDataBinding.clickListener = this
+        // 뷰모델
+        viewDataBinding.viewModel = mainViewModel
 
-        mainViewModel.readAllData.observe(this, Observer {
-            adapter.setData(it)
+        mainViewModel.readAllData.observe(this, Observer { recent ->
+            recent.let { mainListAdapter.submitList(it) }
         })
 
         mainViewModel.bookListViewType.observe(this@MainFragment, {
             currentListViewType = it
             setListViewType(viewDataBinding.rvLookBookList, it)
         })
+        viewDataBinding.clickListener = this
     }
 
     /**
@@ -74,17 +76,14 @@ class MainFragment : BaseFragment<FragmentMainBinding>(), View.OnClickListener {
      */
     private fun setListViewType(bookListView: RecyclerView, viewType: Int) {
         when (viewType) {
-            BookListAdapter.TEXT_VIEW_TYPE -> {
-                bookListView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
-            }
-            BookListAdapter.IMAGE_VIEW_TYPE -> {
+            MainListAdapter.RECENT_VIEW_TYPE -> {
                 bookListView.layoutManager = GridLayoutManager(bookListView.context, 3)
             }
         }
 
         bookListView.adapter?.let {
             if (it is MainListAdapter) {
-                it.itemViewType = viewType
+                it.itemViewType = R.layout.item_recent_type_book
             }
         }
     }

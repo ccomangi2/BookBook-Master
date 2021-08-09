@@ -1,13 +1,14 @@
 package com.example.bookbook_master.view.fragment
 
 import android.content.Context
-import android.renderscript.ScriptGroup
+import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -41,7 +42,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListen
     }
 
     private val searchViewModel: SearchViewModel by viewModel()
-    private val mainViewModel : MainViewModel by lazy { MainViewModel(requireNotNull(this.activity).application) }
+    private val mainViewModel : MainViewModel by viewModel()
 
     private lateinit var bookListAdapter: BookListAdapter
     private var currentListViewType = DEFAULT_VIEW_TYPE

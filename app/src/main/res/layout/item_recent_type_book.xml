@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="recent"
+            type="com.example.bookbook_master.model.roomDB.entity.Recent" />
+
+        <variable
+            name="bookClickListener"
+            type="com.example.bookbook_master.adapter.callback.OnBookClickListener" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="4dp"
+        android:background="#D7E9EC"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="1dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#D7E9EC"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="@{() -> bookClickListener.onClickBook(recent.document)}">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_item_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="01"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:fontFamily="@font/medium"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_book_thumbnail" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_book_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/no_img"
+                app:imageUrl="@{recent.document.thumbnail}"
+                app:layout_constraintDimensionRatio="h,120:178"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_book_title"
+                style="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="8dp"
+                android:ellipsize="none"
+                android:fontFamily="@font/medium"
+                android:lines="2"
+                android:maxLines="2"
+                android:text="@{recent.document.title}"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_item_number"
+                app:layout_constraintTop_toBottomOf="@+id/iv_book_thumbnail"
+                tools:text="책 제목" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

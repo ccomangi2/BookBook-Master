@@ -19,40 +19,19 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun recentDao(): RecentDAO
 
     companion object {
-        private var instance: AppDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
         @Synchronized
         fun getInstance(context: Context): AppDatabase? {
-            if (instance == null) {
-                synchronized(AppDatabase::class){
-                    instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        AppDatabase::class.java,
-                        "database-recent"
-                    )
-//                        .addCallback(object : RoomDatabase.Callback(){
-//                        override fun onCreate(db: SupportSQLiteDatabase) {
-//                            super.onCreate(db)
-//                            fillInDb(context.applicationContext)
-//                        }
-//                    })
-                        .build()
-                }
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    "database-recent"
+                ).build()
+                INSTANCE = instance
+                instance
             }
-            return instance
         }
-//        // 데이터 미리 채우기
-//        fun fillInDb(context: Context){
-//            CoroutineScope(Dispatchers.IO).launch {
-//                getInstance(context)!!.recentDao().addRecentDb(
-//                    USER_DATA
-//                )
-//            }
-//        }
     }
 }
-lateinit var document: Document
-private val USER_DATA = arrayListOf(
-    Recent(0,document),
-    Recent(0,document)
-)
