@@ -2,11 +2,13 @@ package com.example.bookbook_master.model.roomDB.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import androidx.room.OnConflictStrategy.REPLACE
 import com.example.bookbook_master.model.roomDB.entity.Recent
 
 @Dao
 interface RecentDAO {
-    @Insert
+    // 중복 처리
+    @Insert(onConflict = REPLACE)
     suspend fun addRecent(recent: Recent)
 
     @Insert
@@ -18,6 +20,6 @@ interface RecentDAO {
     @Delete
     suspend fun deleteRecent(recent : Recent)
 
-    @Query("SELECT * FROM recent ORDER BY id ASC")
+    @Query("SELECT title, * FROM recent GROUP BY title ORDER BY id DESC LIMIT 30")
     fun getAll() : LiveData<List<Recent>>
 }
