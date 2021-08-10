@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="end">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.bookbook_master.viewmodel.WishViewModel" />
@@ -16,9 +18,9 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:fitsSystemWindows="true"
         android:focusableInTouchMode="true"
-        android:background="@color/white"
         tools:context=".view.fragment.WishFragment">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -102,23 +104,79 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/scrollView4" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_wish_book_list"
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scrollView4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
-                android:clipToPadding="false"
-                android:orientation="vertical"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/item_wish_type_book" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:id="@+id/b_date"
+                            android:onClick="@{clickListener}"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:stateListAnimator="@null"
+                            android:layout_marginLeft="20dp"
+                            android:background="@color/white"
+                            android:src="@drawable/date"/>
+
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:id="@+id/b_lowPrice"
+                            android:onClick="@{clickListener}"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:stateListAnimator="@null"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/low_non"
+                            android:background="@color/white" />
+
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:id="@+id/b_highPrice"
+                            android:onClick="@{clickListener}"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:stateListAnimator="@null"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/high_non"
+                            android:background="@color/white" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_wish_book_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:clipToPadding="false"
+                        android:orientation="vertical"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                        tools:listitem="@layout/item_wish_type_book" />
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

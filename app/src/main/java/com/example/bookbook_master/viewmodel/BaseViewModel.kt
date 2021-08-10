@@ -14,7 +14,7 @@ open class BaseViewModel : ViewModel() {
     //MutableLiveData 는 get/set 모두 허용 = 읽기/변경 가능
     //LiveData는 get만 허용 = 읽기만 가능
 
-    // 네트워크(인터넷) 오류
+    // 네트워크(인터넷) 오류.
     private val _showNetworkError = MutableLiveData<String>()
     val showNetworkError: LiveData<String> = _showNetworkError
 

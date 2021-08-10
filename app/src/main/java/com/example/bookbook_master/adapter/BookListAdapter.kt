@@ -4,9 +4,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookbook_master.adapter.callback.BookListDiffCallback
-import com.example.bookbook_master.adapter.callback.OnBookClickListener
+import com.example.bookbook_master.adapter.listener.OnBookClickListener
 import com.example.bookbook_master.adapter.viewholder.BookSearchTypeViewHolder
-import com.example.bookbook_master.adapter.viewholder.BookWishTypeViewHolder
 import com.example.bookbook_master.model.data.Document
 
 /**

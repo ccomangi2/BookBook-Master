@@ -30,6 +30,14 @@ class WishRepository(application: Application) {
         return wishDAO.getAll()
     }
 
+    fun getLowAll(): LiveData<List<Wish>> {
+        return wishDAO.getLowAll()
+    }
+
+    fun getHighAll(): LiveData<List<Wish>> {
+        return wishDAO.getHighAll()
+    }
+
     fun deleteAll() {
         return wishDAO.deleteAll()
     }

@@ -22,7 +22,6 @@ import kotlinx.coroutines.launch
 
 class WishViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = WishRepository(application)
-    private val items = repository.getAll()
 
 
     //뷰 타입을 이미지뷰타입으로 설정
@@ -31,7 +30,15 @@ class WishViewModel(application: Application) : AndroidViewModel(application) {
 
 
     fun getAll(): LiveData<List<Wish>> {
-        return items
+        return repository.getAll()
+    }
+
+    fun getLowAll(): LiveData<List<Wish>> {
+        return repository.getLowAll()
+    }
+
+    fun getHighAll(): LiveData<List<Wish>> {
+        return repository.getHighAll()
     }
 
     fun addWish(wish: Wish){

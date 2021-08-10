@@ -3,7 +3,7 @@ package com.example.bookbook_master.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bookbook_master.adapter.callback.OnBookClickListener
+import com.example.bookbook_master.adapter.listener.OnBookClickListener
 import com.example.bookbook_master.adapter.callback.RecentBookListDiffCallback
 import com.example.bookbook_master.adapter.viewholder.BookRecentTypeViewHolder
 import com.example.bookbook_master.model.roomDB.entity.Recent

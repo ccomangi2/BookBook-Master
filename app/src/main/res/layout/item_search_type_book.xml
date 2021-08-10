@@ -10,7 +10,7 @@
 
         <variable
             name="bookClickListener"
-            type="com.example.bookbook_master.adapter.callback.OnBookClickListener" />
+            type="com.example.bookbook_master.adapter.listener.OnBookClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView

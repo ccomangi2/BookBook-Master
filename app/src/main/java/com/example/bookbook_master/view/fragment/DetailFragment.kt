@@ -3,15 +3,10 @@ package com.example.bookbook_master.view.fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.bookbook_master.R
-import com.example.bookbook_master.adapter.callback.OnBookClickListener
-import com.example.bookbook_master.adapter.callback.OnWishClickListener
+import com.example.bookbook_master.adapter.listener.OnWishClickListener
 import com.example.bookbook_master.databinding.FragmentDetailBinding
 import com.example.bookbook_master.model.data.Document
-import com.example.bookbook_master.model.roomDB.entity.Recent
 import com.example.bookbook_master.model.roomDB.entity.Wish
 import com.example.bookbook_master.viewmodel.DetailViewModel
 import com.example.bookbook_master.viewmodel.WishViewModel
@@ -59,6 +54,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(), View.OnClickListen
     private val wishClickListener = object : OnWishClickListener {
         override fun onClickWish(document: Document) {
             // 로컬 디비에 저장 ( 위시리스트 )
+            ib_favorite_book.setImageResource(R.drawable.ic_favorite_on_24)
             val wish = Wish(0, document)
             wishViewModel.addWish(wish)
             Log.d("좋아요", "추가")

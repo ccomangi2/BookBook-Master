@@ -1,32 +1,22 @@
 package com.example.bookbook_master.view.fragment
 
-import android.content.Context
-import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookbook_master.R
 import com.example.bookbook_master.adapter.BookListAdapter
-import com.example.bookbook_master.adapter.MainListAdapter
-import com.example.bookbook_master.adapter.callback.OnBookClickListener
+import com.example.bookbook_master.adapter.listener.OnBookClickListener
 import com.example.bookbook_master.databinding.FragmentSearchBinding
 import com.example.bookbook_master.model.data.Document
 import com.example.bookbook_master.model.roomDB.entity.Recent
 import com.example.bookbook_master.view.activity.MainActivity
-import com.example.bookbook_master.viewmodel.DetailViewModel
 import com.example.bookbook_master.viewmodel.MainViewModel
 import com.example.bookbook_master.viewmodel.SearchViewModel
 import kotlinx.android.synthetic.main.fragment_search.*
-import kotlinx.coroutines.Dispatchers
-import org.koin.androidx.scope.lifecycleScope
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.concurrent.thread
 

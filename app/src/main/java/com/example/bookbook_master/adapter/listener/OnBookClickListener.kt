@@ -1,4 +1,4 @@
-package com.example.bookbook_master.adapter.callback
+package com.example.bookbook_master.adapter.listener
 
 import com.example.bookbook_master.model.data.Document
 /**

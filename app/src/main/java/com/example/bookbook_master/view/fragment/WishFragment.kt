@@ -1,31 +1,20 @@
 package com.example.bookbook_master.view.fragment
 
-import android.content.Intent
-import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookbook_master.R
-import com.example.bookbook_master.adapter.BookListAdapter
-import com.example.bookbook_master.adapter.MainListAdapter
 import com.example.bookbook_master.adapter.WishListAdapter
-import com.example.bookbook_master.adapter.callback.OnBookClickListener
-import com.example.bookbook_master.databinding.FragmentDetailBinding
-import com.example.bookbook_master.databinding.FragmentMainBinding
+import com.example.bookbook_master.adapter.listener.OnBookClickListener
 import com.example.bookbook_master.databinding.FragmentWishlistBinding
 import com.example.bookbook_master.model.data.Document
 import com.example.bookbook_master.model.roomDB.entity.Recent
-import com.example.bookbook_master.viewmodel.DetailViewModel
 import com.example.bookbook_master.viewmodel.MainViewModel
-import com.example.bookbook_master.viewmodel.SearchViewModel
 import com.example.bookbook_master.viewmodel.WishViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import kotlinx.android.synthetic.main.fragment_wishlist.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -113,6 +102,36 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
             }
             R.id.b_delete -> {
                 wishViewModel.deleteAll()
+            }
+            R.id.b_date -> {
+                b_date.setImageResource(R.drawable.date)
+                b_lowPrice.setImageResource(R.drawable.low_non)
+                b_highPrice.setImageResource(R.drawable.high_non)
+                wishViewModel.getAll().observe(this, Observer {
+                    Log.d("wish_data", it.toString())
+                    wishListAdapter.setData(it)
+                    wishListAdapter.notifyDataSetChanged()
+                })
+            }
+            R.id.b_lowPrice -> {
+                b_date.setImageResource(R.drawable.date_non)
+                b_lowPrice.setImageResource(R.drawable.low)
+                b_highPrice.setImageResource(R.drawable.high_non)
+                wishViewModel.getLowAll().observe(this, Observer {
+                    Log.d("wish_data", it.toString())
+                    wishListAdapter.setData(it)
+                    wishListAdapter.notifyDataSetChanged()
+                })
+            }
+            R.id.b_highPrice -> {
+                b_date.setImageResource(R.drawable.date_non)
+                b_lowPrice.setImageResource(R.drawable.low_non)
+                b_highPrice.setImageResource(R.drawable.high)
+                wishViewModel.getHighAll().observe(this, Observer {
+                    Log.d("wish_data", it.toString())
+                    wishListAdapter.setData(it)
+                    wishListAdapter.notifyDataSetChanged()
+                })
             }
         }
     }

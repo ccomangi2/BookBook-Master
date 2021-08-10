@@ -3,13 +3,9 @@ package com.example.bookbook_master.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bookbook_master.adapter.callback.BookListDiffCallback
-import com.example.bookbook_master.adapter.callback.OnBookClickListener
+import com.example.bookbook_master.adapter.listener.OnBookClickListener
 import com.example.bookbook_master.adapter.callback.WishBookListDiffCallback
-import com.example.bookbook_master.adapter.viewholder.BookSearchTypeViewHolder
 import com.example.bookbook_master.adapter.viewholder.BookWishTypeViewHolder
-import com.example.bookbook_master.model.data.Document
-import com.example.bookbook_master.model.roomDB.entity.Recent
 import com.example.bookbook_master.model.roomDB.entity.Wish
 
 /**
@@ -52,6 +48,25 @@ class WishListAdapter(var itemViewType: Int, private val bookClickListener: OnBo
     // 뷰 타입 함수 (지금은 필요없는 함수)
     override fun getItemViewType(position: Int): Int {
         return itemViewType
+    }
+
+    // 롱클릭 드래그로 포지션 위치 변경
+    //만약 움직이는 포지션(fromPosition)이 가야하는 포지션(toPosition)보다 큰 경우(뒤에 있음) 하나씩 뒤로 밀고
+    //움직이는 포지션이 가야하는 포지션보다 작은 경우 하나씩 앞으로 당긴 뒤 위치가 움직였다는 notifyItemMove를 호출한다.
+    fun swapItems(fromPosition: Int, toPosition: Int) {
+        if (fromPosition < toPosition) {
+            for (i in fromPosition until toPosition) {
+                wishList[i + 1] = wishList[i]
+                wishList[i] = wishList[i + 1]
+            }
+        } else {
+            for (i in fromPosition..toPosition + 1) {
+                wishList[i - 1] = wishList[i]
+                wishList[i] = wishList[i + 1]
+            }
+        }
+
+        notifyItemMoved(fromPosition, toPosition)
     }
 
     override fun getItemCount(): Int {

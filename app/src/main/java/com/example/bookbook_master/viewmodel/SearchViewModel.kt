@@ -1,25 +1,20 @@
 package com.example.bookbook_master.viewmodel
 
-import android.accounts.NetworkErrorException
 import android.os.NetworkOnMainThreadException
-import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.*
 import com.example.bookbook_master.adapter.BookListAdapter
-import com.example.bookbook_master.adapter.callback.OnSearchActionListener
+import com.example.bookbook_master.adapter.listener.OnSearchActionListener
 import com.example.bookbook_master.model.data.BookRepository
 import com.example.bookbook_master.model.data.Document
-import com.example.bookbook_master.model.roomDB.entity.Recent
-import com.example.bookbook_master.model.roomDB.repository.RecentRepository
-import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.coroutines.*
-import kotlin.concurrent.thread
 
 /**
  * 도서 검색 뷰모델
  * @author philippe
  */
-class SearchViewModel(private val bookRepository: BookRepository) : BaseViewModel(), OnSearchActionListener {
+class SearchViewModel(private val bookRepository: BookRepository) : BaseViewModel(),
+    OnSearchActionListener {
         //coroutines의 상태
         private var searchBookJob = Job()
 
