@@ -111,6 +111,9 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
             R.id.b_back -> {
                 activity?.onBackPressed()
             }
+            R.id.b_delete -> {
+                wishViewModel.deleteAll()
+            }
         }
     }
 }

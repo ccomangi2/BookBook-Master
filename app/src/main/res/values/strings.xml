@@ -24,6 +24,8 @@
     <string name="network_message_error_title">알 수 없는 문제가 발생하였습니다.</string>
     <string name="network_message_error_message">죄송합니다, 실행에 문제가 발생하였습니다.\n온라인으로 이동해 추가로 도움을 받아보시기 바랍니다.</string>
 
+    <string name="delete">위시리스트를 전부 삭제하시겠습니까?</string>
+
 
     <string name="btn_confirm">확인</string>
 </resources>

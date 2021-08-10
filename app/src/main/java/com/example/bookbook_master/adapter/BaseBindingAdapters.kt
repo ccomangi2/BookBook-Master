@@ -114,7 +114,7 @@ object BaseBindingAdapters {
     // 아이템 번호
     @BindingAdapter("itemNumber")
     @JvmStatic
-    fun setBookItemNumber(textView: AppCompatTextView, item_number: Int) {
-        textView.text = item_number.toString()
+    fun setBookItemNumber(textView: AppCompatTextView, item_number: String) {
+        textView.text = item_number
     }
 }

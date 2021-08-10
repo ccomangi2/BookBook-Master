@@ -46,6 +46,12 @@ class WishViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun deleteAll() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAll()
+        }
+    }
+
     // 리소스 정리
     override fun onCleared() {
         super.onCleared()

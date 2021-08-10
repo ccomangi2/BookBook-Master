@@ -29,4 +29,8 @@ class WishRepository(application: Application) {
     fun getAll(): LiveData<List<Wish>> {
         return wishDAO.getAll()
     }
+
+    fun deleteAll() {
+        return wishDAO.deleteAll()
+    }
 }

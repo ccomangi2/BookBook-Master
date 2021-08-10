@@ -62,6 +62,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(), View.OnClickListen
             val wish = Wish(0, document)
             wishViewModel.addWish(wish)
             Log.d("좋아요", "추가")
+            showToastMessage("${wish.document.title} 이(가) 위시리스트에 추가 되었습니다.")
         }
     }
 

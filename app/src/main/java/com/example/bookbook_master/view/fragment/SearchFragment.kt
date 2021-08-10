@@ -203,27 +203,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListen
     }
 
     /**
-     * 알림창 띄우기
-     */
-    private fun showAlertDialog(context: Context, msg: String) {
-        val alertDialog = AlertDialog.Builder(context).apply {
-            setMessage(msg)
-            setPositiveButton(R.string.btn_confirm) { dialog, _ ->
-                dialog.dismiss()
-            }
-            create()
-        }
-        alertDialog.show()
-    }
-
-    /*
-     * 토스트 메시지 띄우기
-     */
-    private fun showToastMessage(msg: String) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-    }
-
-    /**
      * 키보드 숨기기
      * @param focusView 현재 포커스를 가진 뷰 (TextInputEditText)
      */
