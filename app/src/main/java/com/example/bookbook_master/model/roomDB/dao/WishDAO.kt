@@ -21,6 +21,6 @@ interface WishDAO {
     @Delete
     suspend fun deleteWish(wish: Wish)
 
-//    @Query("SELECT * FROM wish")
-//    fun getAll() : LiveData<List<Wish>>
+    @Query("SELECT title, * FROM wish GROUP BY title")
+    fun getAll() : LiveData<List<Wish>>
 }

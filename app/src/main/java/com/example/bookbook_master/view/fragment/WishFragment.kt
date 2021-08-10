@@ -4,10 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookbook_master.R
 import com.example.bookbook_master.adapter.BookListAdapter
@@ -73,11 +75,11 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
         viewDataBinding.clickListener = this
 
         // 데이터 불러오기
-//        wishViewModel.getAll().observe(this, Observer {
-//            Log.d("wish_data", it.toString())
-//            wishListAdapter.setData(it)
-//            wishListAdapter.notifyDataSetChanged()
-//        })
+        wishViewModel.getAll().observe(this, Observer {
+            Log.d("wish_data", it.toString())
+            wishListAdapter.setData(it)
+            wishListAdapter.notifyDataSetChanged()
+        })
 
         // 뷰타입 설정
         wishViewModel.bookListViewType.observe(this@WishFragment, {
@@ -94,7 +96,7 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
     private fun setListViewType(bookListView: RecyclerView, viewType: Int) {
         when (viewType) {
             WishListAdapter.WISH_VIEW_TYPE -> {
-                bookListView.layoutManager = GridLayoutManager(bookListView.context, 3)
+                bookListView.layoutManager = LinearLayoutManager(bookListView.context)
             }
         }
         bookListView.adapter?.let {

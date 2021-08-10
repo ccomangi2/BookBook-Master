@@ -10,19 +10,23 @@ import com.example.bookbook_master.model.roomDB.entity.Wish
 
 class WishRepository(application: Application) {
     private val wishDAO: WishDAO
-    //private val wishList: LiveData<List<Wish>>
+    private val wishList: LiveData<List<Wish>>
 
     init {
         var db = AppDatabase.getInstance(application)
         wishDAO = db!!.wishDao()
-        //wishList = db.wishDao().getAll()
+        wishList = db.wishDao().getAll()
     }
 
     suspend fun addWish(wish: Wish) {
         wishDAO.addWish(wish)
     }
 
-//    fun getAll(): LiveData<List<Wish>> {
-//        return wishDAO.getAll()
-//    }
+    suspend fun deleteWish(wish: Wish) {
+        wishDAO.deleteWish(wish)
+    }
+
+    fun getAll(): LiveData<List<Wish>> {
+        return wishDAO.getAll()
+    }
 }

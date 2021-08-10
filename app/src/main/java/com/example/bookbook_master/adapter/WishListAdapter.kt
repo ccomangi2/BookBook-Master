@@ -37,7 +37,7 @@ class WishListAdapter(var itemViewType: Int, private val bookClickListener: OnBo
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is BookWishTypeViewHolder -> {
-                holder.bind(getItem(position))
+                holder.bind(wishList[position])
                 holder.item_number(position+1)
             }
         }

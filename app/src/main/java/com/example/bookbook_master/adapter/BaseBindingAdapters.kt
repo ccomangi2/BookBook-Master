@@ -117,15 +117,4 @@ object BaseBindingAdapters {
     fun setBookItemNumber(textView: AppCompatTextView, item_number: Int) {
         textView.text = item_number.toString()
     }
-
-    // 위시리스트 저장
-    @BindingAdapter("isFavoriteBook")
-    @JvmStatic
-    fun setFavoriteBook(imageButton: AppCompatImageButton, isFavorite: Boolean) {
-        if (isFavorite) {
-            imageButton.setImageResource(R.drawable.ic_favorite_on_24)
-        } else {
-            imageButton.setImageResource(R.drawable.ic_favorite_off_24)
-        }
-    }
 }

@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 
 class WishViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = WishRepository(application)
-    //private val items = repository.getAll()
+    private val items = repository.getAll()
 
 
     //뷰 타입을 이미지뷰타입으로 설정
@@ -30,13 +30,19 @@ class WishViewModel(application: Application) : AndroidViewModel(application) {
     val bookListViewType: LiveData<Int> = _bookListViewType
 
 
-//    fun getAll(): LiveData<List<Wish>> {
-//        return items
-//    }
+    fun getAll(): LiveData<List<Wish>> {
+        return items
+    }
 
     fun addWish(wish: Wish){
         viewModelScope.launch(Dispatchers.IO) {
             repository.addWish(wish)
+        }
+    }
+
+    fun deleteWish(wish: Wish){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteWish(wish)
         }
     }
 
