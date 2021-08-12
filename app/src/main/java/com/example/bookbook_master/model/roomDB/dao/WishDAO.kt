@@ -33,6 +33,7 @@ interface WishDAO {
     @Query("SELECT title, * FROM wish GROUP BY title ORDER BY price DESC")
     fun getHighAll() : LiveData<List<Wish>>
 
+    // 전부 삭제
     @Query("DELETE FROM wish")
     fun deleteAll()
 }

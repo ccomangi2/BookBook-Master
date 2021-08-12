@@ -4,16 +4,21 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookbook_master.R
 import com.example.bookbook_master.adapter.WishListAdapter
 import com.example.bookbook_master.adapter.listener.OnBookClickListener
+import com.example.bookbook_master.adapter.listener.OnWishBookDeleteListener
+import com.example.bookbook_master.adapter.listener.OnWishClickListener
 import com.example.bookbook_master.databinding.FragmentWishlistBinding
 import com.example.bookbook_master.model.data.Document
 import com.example.bookbook_master.model.roomDB.entity.Recent
+import com.example.bookbook_master.model.roomDB.entity.Wish
 import com.example.bookbook_master.viewmodel.MainViewModel
 import com.example.bookbook_master.viewmodel.WishViewModel
+import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_wishlist.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -27,6 +32,8 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
         @JvmStatic
         fun newInstance() = WishFragment()
     }
+
+    private val document: Document? = null
 
     // 뷰모델 변경 해야함
     private val wishViewModel: WishViewModel by viewModel()
@@ -63,6 +70,18 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
         // 클릭 리스너
         viewDataBinding.clickListener = this
 
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                return false
+            }
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                // Adapter에 아이템 삭제 요청
+                val position = viewHolder.adapterPosition
+            }
+        }).apply { // ItemTouchHelper에 RecyclerView 설정
+            attachToRecyclerView(viewDataBinding.rvWishBookList)
+        }
+
         // 데이터 불러오기
         wishViewModel.getAll().observe(this, Observer {
             Log.d("wish_data", it.toString())
@@ -75,6 +94,37 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
             currentListViewType = it
             setListViewType(viewDataBinding.rvWishBookList, it)
         })
+
+        // 라디오 버튼 클릭
+        rg.setOnCheckedChangeListener { group, checkedId ->
+            when(checkedId) {
+                R.id.rb_date -> wishViewModel.getAll().observe(this, Observer {
+                    Log.d("wish_data", it.toString())
+                    wishListAdapter.setData(it)
+                    wishListAdapter.notifyDataSetChanged()
+                })
+                R.id.rb_low -> wishViewModel.getLowAll().observe(this, Observer {
+                    Log.d("wish_data", it.toString())
+                    wishListAdapter.setData(it)
+                    wishListAdapter.notifyDataSetChanged()
+                })
+                R.id.rb_high -> wishViewModel.getHighAll().observe(this, Observer {
+                    Log.d("wish_data", it.toString())
+                    wishListAdapter.setData(it)
+                    wishListAdapter.notifyDataSetChanged()
+                })
+            }
+        }
+    }
+
+    private val wishBookDeleteListener = object : OnWishBookDeleteListener {
+        override fun onSwapWish(document: Document) {
+            // 위시리스트 삭제
+            val wish = Wish(0, document)
+            wishViewModel.deleteWish(wish)
+            Log.d("좋아요", "삭제")
+            showToastMessage("${wish.document.title} 이(가) 위시리스트에서 삭제 되었습니다.")
+        }
     }
 
     /**
@@ -102,36 +152,6 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
             }
             R.id.b_delete -> {
                 wishViewModel.deleteAll()
-            }
-            R.id.b_date -> {
-                b_date.setImageResource(R.drawable.date)
-                b_lowPrice.setImageResource(R.drawable.low_non)
-                b_highPrice.setImageResource(R.drawable.high_non)
-                wishViewModel.getAll().observe(this, Observer {
-                    Log.d("wish_data", it.toString())
-                    wishListAdapter.setData(it)
-                    wishListAdapter.notifyDataSetChanged()
-                })
-            }
-            R.id.b_lowPrice -> {
-                b_date.setImageResource(R.drawable.date_non)
-                b_lowPrice.setImageResource(R.drawable.low)
-                b_highPrice.setImageResource(R.drawable.high_non)
-                wishViewModel.getLowAll().observe(this, Observer {
-                    Log.d("wish_data", it.toString())
-                    wishListAdapter.setData(it)
-                    wishListAdapter.notifyDataSetChanged()
-                })
-            }
-            R.id.b_highPrice -> {
-                b_date.setImageResource(R.drawable.date_non)
-                b_lowPrice.setImageResource(R.drawable.low_non)
-                b_highPrice.setImageResource(R.drawable.high)
-                wishViewModel.getHighAll().observe(this, Observer {
-                    Log.d("wish_data", it.toString())
-                    wishListAdapter.setData(it)
-                    wishListAdapter.notifyDataSetChanged()
-                })
             }
         }
     }
