@@ -22,8 +22,8 @@ class WishRepository(application: Application) {
         wishDAO.addWish(wish)
     }
 
-    suspend fun deleteWish(wish: Wish) {
-        wishDAO.deleteWish(wish)
+    fun deleteWish(title: String) {
+        wishDAO.deleteWish(title)
     }
 
     fun getAll(): LiveData<List<Wish>> {

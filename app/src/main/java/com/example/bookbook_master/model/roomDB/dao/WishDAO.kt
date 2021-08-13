@@ -5,6 +5,7 @@ import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
 import com.example.bookbook_master.model.roomDB.entity.Recent
 import com.example.bookbook_master.model.roomDB.entity.Wish
+import retrofit2.Converter
 
 @Dao
 interface WishDAO {
@@ -18,8 +19,9 @@ interface WishDAO {
     @Update
     suspend fun updateWish(wish: Wish)
 
-    @Delete
-    suspend fun deleteWish(wish: Wish)
+    // 하나만 삭제
+    @Query("DELETE FROM wish WHERE title = :title")
+    fun deleteWish(title: String)
 
     //출간일(기본)
     @Query("SELECT title, * FROM wish GROUP BY title ORDER BY datetime DESC")

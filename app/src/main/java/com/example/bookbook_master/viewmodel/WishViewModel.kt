@@ -47,9 +47,9 @@ class WishViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun deleteWish(wish: Wish){
+    fun deleteWish(title: String){
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteWish(wish)
+            repository.deleteWish(title)
         }
     }
 

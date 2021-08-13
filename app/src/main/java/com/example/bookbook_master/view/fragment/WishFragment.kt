@@ -33,8 +33,6 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
         fun newInstance() = WishFragment()
     }
 
-    private val document: Document? = null
-
     // 뷰모델 변경 해야함
     private val wishViewModel: WishViewModel by viewModel()
     private val mainViewModel : MainViewModel by viewModel()
@@ -76,12 +74,12 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
             }
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                wishListAdapter?.getItem()?.get(position)?.let { document?.let { it1 ->
-                    wishBookDeleteListener.onSwapWish(it1)
-                    Log.d("위시리스트 삭제", "됐다.")
+                wishListAdapter?.getItem()?.get(position)?.let {
+                    Log.d("위시리스트 삭제", "됐다?")
+                    wishViewModel.deleteWish(it.document.title)
+                    //wishListAdapter.notifyDataSetChanged()
+                    Log.d("위시리스트 삭제", "${it.document?.title}")
                 }
-                }
-                wishListAdapter.notifyDataSetChanged()
             }
         }).apply { // ItemTouchHelper에 RecyclerView 설정
             attachToRecyclerView(viewDataBinding.rvWishBookList)
@@ -119,16 +117,6 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
                     wishListAdapter.notifyDataSetChanged()
                 })
             }
-        }
-    }
-
-    private val wishBookDeleteListener = object : OnWishBookDeleteListener {
-        override fun onSwapWish(document: Document) {
-            // 위시리스트 삭제
-            val wish = Wish(0, document)
-            wishViewModel.deleteWish(wish)
-            Log.d("좋아요", "삭제")
-            showToastMessage("${wish.document.title} 이(가) 위시리스트에서 삭제 되었습니다.")
         }
     }
 
