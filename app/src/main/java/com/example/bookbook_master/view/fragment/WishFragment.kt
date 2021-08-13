@@ -1,7 +1,9 @@
 package com.example.bookbook_master.view.fragment
 
+import android.graphics.*
 import android.util.Log
 import android.view.View
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -10,12 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bookbook_master.R
 import com.example.bookbook_master.adapter.WishListAdapter
 import com.example.bookbook_master.adapter.listener.OnBookClickListener
-import com.example.bookbook_master.adapter.listener.OnWishBookDeleteListener
-import com.example.bookbook_master.adapter.listener.OnWishClickListener
 import com.example.bookbook_master.databinding.FragmentWishlistBinding
 import com.example.bookbook_master.model.data.Document
 import com.example.bookbook_master.model.roomDB.entity.Recent
-import com.example.bookbook_master.model.roomDB.entity.Wish
 import com.example.bookbook_master.viewmodel.MainViewModel
 import com.example.bookbook_master.viewmodel.WishViewModel
 import kotlinx.android.synthetic.main.fragment_detail.*
@@ -32,6 +31,8 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
         @JvmStatic
         fun newInstance() = WishFragment()
     }
+
+    private val p: Paint = Paint()
 
     // 뷰모델 변경 해야함
     private val wishViewModel: WishViewModel by viewModel()
@@ -68,17 +69,54 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
         // 클릭 리스너
         viewDataBinding.clickListener = this
 
+        // 옆으로 스와이프(왼쪽)
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            var viewBeingCleared = false
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
                 return true
             }
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 wishListAdapter?.getItem()?.get(position)?.let {
-                    Log.d("위시리스트 삭제", "됐다?")
                     wishViewModel.deleteWish(it.document.title)
-                    //wishListAdapter.notifyDataSetChanged()
                     Log.d("위시리스트 삭제", "${it.document?.title}")
+                }
+            }
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    val itemView: View = viewHolder.itemView
+                    val height =
+                        itemView.getBottom().toFloat() - itemView.getTop().toFloat()
+                    val width = height / 3
+                    if (dX > 0) {
+                        //오른쪽으로 밀었을 때
+                    } else {
+                        p.setColor(Color.parseColor("#d0184c"))
+                        val background = RectF(
+                            itemView.getRight().toFloat() + dX,
+                            itemView.getTop().toFloat(),
+                            itemView.getRight().toFloat(),
+                            itemView.getBottom().toFloat()
+                        )
+                        c.drawRect(background, p)
+                    }
                 }
             }
         }).apply { // ItemTouchHelper에 RecyclerView 설정
