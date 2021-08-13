@@ -48,6 +48,10 @@ class WishListAdapter(var itemViewType: Int, private val bookClickListener: OnBo
         wishList.addAll(wish)
     }
 
+    fun getItem(): List<Wish>?{
+        return wishList
+    }
+
     // 뷰 타입 함수 (지금은 필요없는 함수)
     override fun getItemViewType(position: Int): Int {
         return itemViewType

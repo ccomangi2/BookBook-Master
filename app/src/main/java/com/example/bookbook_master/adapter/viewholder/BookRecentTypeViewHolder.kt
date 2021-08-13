@@ -20,6 +20,7 @@ class BookRecentTypeViewHolder(private val binding: ItemRecentTypeBookBinding) :
 
     fun item_number(position: Int) {
         binding.recent?.id = position
+        binding.recent?.document?.item_number = position.toString()
         binding.tvItemNumber.text = binding.recent?.id.toString()
     }
 

@@ -74,5 +74,4 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(), View.OnClickListen
             }
         }
     }
-
 }

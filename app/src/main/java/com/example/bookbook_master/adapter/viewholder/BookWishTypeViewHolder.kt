@@ -1,5 +1,6 @@
 package com.example.bookbook_master.adapter.viewholder
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,7 @@ class BookWishTypeViewHolder(private val binding: ItemWishTypeBookBinding) : Rec
 
     fun item_number(position: Int) {
         binding.wish?.id = position
+        binding.wish?.document?.item_number = position.toString()
         binding.tvItemNumber.text = binding.wish?.id.toString()
     }
 

@@ -70,13 +70,18 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
         // 클릭 리스너
         viewDataBinding.clickListener = this
 
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-                return false
+                return true
             }
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                // Adapter에 아이템 삭제 요청
                 val position = viewHolder.adapterPosition
+                wishListAdapter?.getItem()?.get(position)?.let { document?.let { it1 ->
+                    wishBookDeleteListener.onSwapWish(it1)
+                    Log.d("위시리스트 삭제", "됐다.")
+                }
+                }
+                wishListAdapter.notifyDataSetChanged()
             }
         }).apply { // ItemTouchHelper에 RecyclerView 설정
             attachToRecyclerView(viewDataBinding.rvWishBookList)
