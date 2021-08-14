@@ -22,12 +22,20 @@ class WishRepository(application: Application) {
         wishDAO.addWish(wish)
     }
 
+    suspend fun updateWish(wish: Wish) {
+        wishDAO.updateWish(wish)
+    }
+
     fun deleteWish(title: String) {
         wishDAO.deleteWish(title)
     }
 
     fun getAll(): LiveData<List<Wish>> {
         return wishDAO.getAll()
+    }
+
+    fun getDateAll(): LiveData<List<Wish>> {
+        return wishDAO.getDateAll()
     }
 
     fun getLowAll(): LiveData<List<Wish>> {

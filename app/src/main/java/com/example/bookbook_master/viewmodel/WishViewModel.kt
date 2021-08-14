@@ -33,6 +33,10 @@ class WishViewModel(application: Application) : AndroidViewModel(application) {
         return repository.getAll()
     }
 
+    fun getDateAll(): LiveData<List<Wish>> {
+        return repository.getDateAll()
+    }
+
     fun getLowAll(): LiveData<List<Wish>> {
         return repository.getLowAll()
     }
@@ -44,6 +48,12 @@ class WishViewModel(application: Application) : AndroidViewModel(application) {
     fun addWish(wish: Wish){
         viewModelScope.launch(Dispatchers.IO) {
             repository.addWish(wish)
+        }
+    }
+
+    fun updateWish(wish: Wish) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateWish(wish)
         }
     }
 

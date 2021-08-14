@@ -1,15 +1,14 @@
 package com.example.bookbook_master.adapter
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookbook_master.adapter.callback.WishBookListDiffCallback
 import com.example.bookbook_master.adapter.listener.OnBookClickListener
 import com.example.bookbook_master.adapter.viewholder.BookWishTypeViewHolder
 import com.example.bookbook_master.model.roomDB.entity.Wish
-import com.example.bookbook_master.viewmodel.WishViewModel
-
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * 도서 리스트 어댑터 - 위시리스트 화면
@@ -19,6 +18,11 @@ class WishListAdapter(var itemViewType: Int, private val bookClickListener: OnBo
     ListAdapter<Wish, RecyclerView.ViewHolder>(WishBookListDiffCallback()) {
 
     private var wishList = ArrayList<Wish>()
+
+    // drag 시작 리스너
+    interface OnStartDragListener {
+        fun onStartDrag(viewHolder: RecyclerView.ViewHolder)
+    }
 
     companion object {
         const val WISH_VIEW_TYPE = 1
@@ -48,8 +52,15 @@ class WishListAdapter(var itemViewType: Int, private val bookClickListener: OnBo
         wishList.addAll(wish)
     }
 
+    // 삭제를 위한
     fun getItem(): List<Wish>?{
         return wishList
+    }
+
+    // 아이템 순서 이동
+    fun swapItem(fromPos: Int, toPos: Int) {
+        Collections.swap(wishList, fromPos, toPos)
+        notifyItemMoved(fromPos, toPos)
     }
 
     // 뷰 타입 함수 (지금은 필요없는 함수)

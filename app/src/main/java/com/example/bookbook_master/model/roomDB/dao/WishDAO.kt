@@ -23,9 +23,13 @@ interface WishDAO {
     @Query("DELETE FROM wish WHERE title = :title")
     fun deleteWish(title: String)
 
-    //출간일(기본)
-    @Query("SELECT title, * FROM wish GROUP BY title ORDER BY datetime DESC")
+    //기본 정렬
+    @Query("SELECT title, * FROM wish GROUP BY title")
     fun getAll() : LiveData<List<Wish>>
+
+    //출간일
+    @Query("SELECT title, * FROM wish GROUP BY title ORDER BY datetime DESC")
+    fun getDateAll() : LiveData<List<Wish>>
 
     //최고가
     @Query("SELECT title, * FROM wish GROUP BY title ORDER BY price ASC")

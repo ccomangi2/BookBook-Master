@@ -3,7 +3,6 @@ package com.example.bookbook_master.view.fragment
 import android.graphics.*
 import android.util.Log
 import android.view.View
-import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -15,6 +14,7 @@ import com.example.bookbook_master.adapter.listener.OnBookClickListener
 import com.example.bookbook_master.databinding.FragmentWishlistBinding
 import com.example.bookbook_master.model.data.Document
 import com.example.bookbook_master.model.roomDB.entity.Recent
+import com.example.bookbook_master.model.roomDB.entity.Wish
 import com.example.bookbook_master.viewmodel.MainViewModel
 import com.example.bookbook_master.viewmodel.WishViewModel
 import kotlinx.android.synthetic.main.fragment_detail.*
@@ -32,14 +32,15 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
         fun newInstance() = WishFragment()
     }
 
-    private val p: Paint = Paint()
+    private var document: Document? = null
 
-    // 뷰모델 변경 해야함
+    // 뷰모델
     private val wishViewModel: WishViewModel by viewModel()
     private val mainViewModel : MainViewModel by viewModel()
 
-    // 어댑터 변경 해야함
+    // 어댑터
     private lateinit var wishListAdapter: WishListAdapter
+
     private var currentListViewType = DEFAULT_VIEW_TYPE
 
     private val bookClickListener = object : OnBookClickListener {
@@ -69,17 +70,26 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
         // 클릭 리스너
         viewDataBinding.clickListener = this
 
-        // 옆으로 스와이프(왼쪽)
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            var viewBeingCleared = false
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+        // drag & Swipe
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val fromPos: Int = viewHolder.adapterPosition
+                val toPos: Int = target.adapterPosition
+                wishListAdapter.swapItem(fromPos, toPos)
+                val wish = document?.let { Wish(0, it) }
+                wish?.let { wishViewModel.updateWish(it) }
                 return true
             }
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
+                val position = viewHolder.layoutPosition
                 wishListAdapter?.getItem()?.get(position)?.let {
                     wishViewModel.deleteWish(it.document.title)
-                    Log.d("위시리스트 삭제", "${it.document?.title}")
+                    Log.d("위시리스트 삭제", it.document.title)
                 }
             }
             override fun onChildDraw(
@@ -91,6 +101,24 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
                 actionState: Int,
                 isCurrentlyActive: Boolean
             ) {
+                val icon: Bitmap
+                // 현재 받고 있는 아이템 헬퍼 동작이 스와이프 동작일 때
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    val itemView: View = viewHolder.itemView
+                    val height = (itemView.bottom - itemView.top).toFloat()
+                    val width = height / 3
+                    val paint = Paint()
+                    if (dX < 0) {
+                        //왼쪽으로 밀었을 때
+                        paint.color = Color.parseColor("#ff0000")
+                        val background = RectF(itemView.right.toFloat() + dX, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat())
+                        c.drawRect(background, paint)
+
+                        icon = BitmapFactory.decodeResource(resources, R.drawable.ic_item_delete)
+                        val iconDst = RectF(itemView.right.toFloat() - 2 * width, itemView.top.toFloat() * width, itemView.right.toFloat() - width, itemView.bottom.toFloat() - width)
+                        c.drawBitmap(icon, null, iconDst, null)
+                    }
+                }
                 super.onChildDraw(
                     c,
                     recyclerView,
@@ -100,24 +128,6 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
                     actionState,
                     isCurrentlyActive
                 )
-                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-                    val itemView: View = viewHolder.itemView
-                    val height =
-                        itemView.getBottom().toFloat() - itemView.getTop().toFloat()
-                    val width = height / 3
-                    if (dX > 0) {
-                        //오른쪽으로 밀었을 때
-                    } else {
-                        p.setColor(Color.parseColor("#d0184c"))
-                        val background = RectF(
-                            itemView.getRight().toFloat() + dX,
-                            itemView.getTop().toFloat(),
-                            itemView.getRight().toFloat(),
-                            itemView.getBottom().toFloat()
-                        )
-                        c.drawRect(background, p)
-                    }
-                }
             }
         }).apply { // ItemTouchHelper에 RecyclerView 설정
             attachToRecyclerView(viewDataBinding.rvWishBookList)
@@ -139,7 +149,7 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
         // 라디오 버튼 클릭
         rg.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId) {
-                R.id.rb_date -> wishViewModel.getAll().observe(this, Observer {
+                R.id.rb_date -> wishViewModel.getDateAll().observe(this, Observer {
                     Log.d("wish_data", it.toString())
                     wishListAdapter.setData(it)
                     wishListAdapter.notifyDataSetChanged()
