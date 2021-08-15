@@ -112,16 +112,19 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
         // 라디오 버튼 클릭
         rg.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId) {
+                // 출간일
                 R.id.rb_date -> wishViewModel.getDateAll().observe(this, Observer {
                     Log.d("wish_data", it.toString())
                     wishListAdapter.setData(it)
                     wishListAdapter.notifyDataSetChanged()
                 })
+                // 최저가
                 R.id.rb_low -> wishViewModel.getLowAll().observe(this, Observer {
                     Log.d("wish_data", it.toString())
                     wishListAdapter.setData(it)
                     wishListAdapter.notifyDataSetChanged()
                 })
+                // 최고가
                 R.id.rb_high -> wishViewModel.getHighAll().observe(this, Observer {
                     Log.d("wish_data", it.toString())
                     wishListAdapter.setData(it)
