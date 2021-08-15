@@ -27,5 +27,4 @@ open class BaseViewModel : ViewModel() {
     fun showNetworkError(msg: String) {
         _showNetworkError.postValue(msg)
     }
-
 }

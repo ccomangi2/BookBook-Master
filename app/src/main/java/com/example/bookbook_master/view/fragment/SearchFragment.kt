@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ import com.example.bookbook_master.adapter.BookListAdapter
 import com.example.bookbook_master.adapter.listener.OnBookClickListener
 import com.example.bookbook_master.databinding.FragmentSearchBinding
 import com.example.bookbook_master.model.data.Document
+import com.example.bookbook_master.model.network.NetWorkStatus
 import com.example.bookbook_master.model.roomDB.entity.Recent
 import com.example.bookbook_master.view.activity.MainActivity
 import com.example.bookbook_master.viewmodel.MainViewModel
@@ -84,9 +86,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListen
         })
 
         // 네트워크 오류
-        searchViewModel.showNetworkError.observe(this, { _ ->
-            activity?.let {
-                showAlertDialog(it, getString(R.string.message_network_error))
+        val connection = context?.let { NetWorkStatus(it) }
+        connection?.observe(this, Observer { isConnected ->
+            if (!isConnected)
+            {
+                activity?.let {
+                    showAlertDialog(it, getString(R.string.message_network_error))
+                }
             }
         })
 
@@ -174,22 +180,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListen
                 }
             }
         })
-    }
-
-    /**
-     * 특정 도서 정보 갱신 (상세 화면에서 좋아요 선택시)
-     */
-    private fun updateDocument(document: Document) {
-        bookListAdapter.currentList.run {
-            for (i in 0 until this.size) {
-                val curDocument = this[i]
-                if (curDocument.isbn == document.isbn) {
-                    curDocument.isFavorite = document.isFavorite
-                    bookListAdapter.notifyItemChanged(i)
-                    break
-                }
-            }
-        }
     }
 
     /**

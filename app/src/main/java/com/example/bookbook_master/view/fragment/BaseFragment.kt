@@ -42,7 +42,8 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         val alertDialog = AlertDialog.Builder(context).apply {
             setMessage(msg)
             setPositiveButton(R.string.btn_confirm) { dialog, _ ->
-                dialog.dismiss()
+                var pid: Int = android.os.Process.myPid()
+                android.os.Process.killProcess(pid)
             }
             create()
         }
