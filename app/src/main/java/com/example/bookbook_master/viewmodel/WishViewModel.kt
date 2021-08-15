@@ -20,9 +20,12 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
+/**
+ * 위시리스트 뷰모델
+ * @author philippe
+ */
 class WishViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = WishRepository(application)
-
 
     //뷰 타입을 이미지뷰타입으로 설정
     private val _bookListViewType = MutableLiveData(WishListAdapter.WISH_VIEW_TYPE)

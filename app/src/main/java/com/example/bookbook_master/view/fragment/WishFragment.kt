@@ -92,43 +92,6 @@ class WishFragment : BaseFragment<FragmentWishlistBinding>(), View.OnClickListen
                     Log.d("위시리스트 삭제", it.document.title)
                 }
             }
-            override fun onChildDraw(
-                c: Canvas,
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                dX: Float,
-                dY: Float,
-                actionState: Int,
-                isCurrentlyActive: Boolean
-            ) {
-                val icon: Bitmap
-                // 현재 받고 있는 아이템 헬퍼 동작이 스와이프 동작일 때
-                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-                    val itemView: View = viewHolder.itemView
-                    val height = (itemView.bottom - itemView.top).toFloat()
-                    val width = height / 3
-                    val paint = Paint()
-                    if (dX < 0) {
-                        //왼쪽으로 밀었을 때
-                        paint.color = Color.parseColor("#ff0000")
-                        val background = RectF(itemView.right.toFloat() + dX, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat())
-                        c.drawRect(background, paint)
-
-                        icon = BitmapFactory.decodeResource(resources, R.drawable.ic_item_delete)
-                        val iconDst = RectF(itemView.right.toFloat() - 2 * width, itemView.top.toFloat() * width, itemView.right.toFloat() - width, itemView.bottom.toFloat() - width)
-                        c.drawBitmap(icon, null, iconDst, null)
-                    }
-                }
-                super.onChildDraw(
-                    c,
-                    recyclerView,
-                    viewHolder,
-                    dX,
-                    dY,
-                    actionState,
-                    isCurrentlyActive
-                )
-            }
         }).apply { // ItemTouchHelper에 RecyclerView 설정
             attachToRecyclerView(viewDataBinding.rvWishBookList)
         }

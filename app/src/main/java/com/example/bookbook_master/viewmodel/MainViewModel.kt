@@ -17,6 +17,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
+/**
+ * 메인 화면(최근 본 상품) 뷰모델
+ * @author philippe
+ */
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = RecentRepository(application)
     private val items = repository.getAll()

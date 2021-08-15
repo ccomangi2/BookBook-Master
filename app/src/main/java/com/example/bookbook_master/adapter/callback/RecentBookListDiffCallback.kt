@@ -5,7 +5,7 @@ import com.example.bookbook_master.model.data.Document
 import com.example.bookbook_master.model.roomDB.entity.Recent
 
 /**
- * 기존 도서 목록과 신규 도서 목록을 비교하는 callback
+ * 최근 본 상품 callback
  * @author philippe
  */
 class RecentBookListDiffCallback : DiffUtil.ItemCallback<Recent>() {

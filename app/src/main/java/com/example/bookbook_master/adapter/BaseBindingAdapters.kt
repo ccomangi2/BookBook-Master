@@ -19,7 +19,6 @@ import java.util.*
  * @author philippe
  */
 object BaseBindingAdapters {
-
     private const val INPUT_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     private const val OUTPUT_DATE_FORMAT = "yyyy-MM-dd"
 

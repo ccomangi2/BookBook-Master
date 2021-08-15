@@ -19,11 +19,6 @@ class WishListAdapter(var itemViewType: Int, private val bookClickListener: OnBo
 
     private var wishList = ArrayList<Wish>()
 
-    // drag 시작 리스너
-    interface OnStartDragListener {
-        fun onStartDrag(viewHolder: RecyclerView.ViewHolder)
-    }
-
     companion object {
         const val WISH_VIEW_TYPE = 1
     }

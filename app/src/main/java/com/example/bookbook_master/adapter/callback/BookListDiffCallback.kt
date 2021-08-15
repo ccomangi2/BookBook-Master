@@ -3,7 +3,7 @@ package com.example.bookbook_master.adapter.callback
 import androidx.recyclerview.widget.DiffUtil
 import com.example.bookbook_master.model.data.Document
 /**
- * 최근 본 상품 callback
+ * 기존 도서 목록과 신규 도서 목록을 비교하는 callback
  * @author philippe
  */
 class BookListDiffCallback : DiffUtil.ItemCallback<Document>() {

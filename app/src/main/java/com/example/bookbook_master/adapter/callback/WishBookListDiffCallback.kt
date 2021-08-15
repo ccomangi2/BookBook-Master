@@ -7,7 +7,7 @@ import com.example.bookbook_master.model.roomDB.entity.Recent
 import com.example.bookbook_master.model.roomDB.entity.Wish
 
 /**
- * 기존 도서 목록과 신규 도서 목록을 비교하는 callback
+ * 위시리스트 callback
  * @author philippe
  */
 class WishBookListDiffCallback : DiffUtil.ItemCallback<Wish>() {
