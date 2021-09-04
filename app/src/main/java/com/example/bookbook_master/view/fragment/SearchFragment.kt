@@ -108,12 +108,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListen
 
     // 문자열이 바뀔때
     inner class SearchEditWatcher : TextWatcher {
+        //텍스트가 변경되기 바로 이전
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            search()
+            //search()
         }
+        //텍스트가 변경되는 동시
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            search()
+            //search()
         }
+        //텍스트가 변경된 이후
         override fun afterTextChanged(s: Editable?) {
             search()
         }
@@ -131,7 +134,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), View.OnClickListen
     fun search() {
         showProgress(true) // ProgressBar 나타남
         thread(start = true) {
-            Thread.sleep(3000) //1초
+            Thread.sleep(3000) //3초
             activity?.runOnUiThread() {
                 showProgress(false) // ProgressBar 사라짐
                 searchViewModel.searchBookList(et_search_keyword.text.toString(), v_loading) // 목록 생성

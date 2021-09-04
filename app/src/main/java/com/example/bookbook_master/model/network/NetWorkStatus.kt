@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.net.*
 import android.os.Build
 import androidx.lifecycle.LiveData
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 class NetWorkStatus (private val context: Context) : LiveData<Boolean>()
 {
@@ -44,10 +45,10 @@ class NetWorkStatus (private val context: Context) : LiveData<Boolean>()
         super.onInactive()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
         {
-            connectivityManager.unregisterNetworkCallback(connectivityManagerCallback())
+            LocalBroadcastManager.getInstance(context).unregisterReceiver(networkReceiver)
         } else
         {
-            context.unregisterReceiver(networkReceiver)
+            connectivityManager.unregisterNetworkCallback(connectivityManagerCallback())
         }
     }
 

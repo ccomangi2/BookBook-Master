@@ -9,11 +9,14 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.example.bookbook_master.BookBookApplication
 import com.example.bookbook_master.R
+import com.example.bookbook_master.adapter.listener.OnBackPressedListener
 import com.google.android.material.textfield.TextInputEditText
 import com.example.bookbook_master.view.fragment.MainFragment
 import com.example.bookbook_master.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var onBackPressedListener: OnBackPressedListener
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_AppCompat_Light_NoActionBar)
         super.onCreate(savedInstanceState)
@@ -30,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         }
         return super.dispatchTouchEvent(ev)
     }
-
+    
     /**
      * 키보드 숨김
      * @param focusView 현재 포커스를 가진 뷰
