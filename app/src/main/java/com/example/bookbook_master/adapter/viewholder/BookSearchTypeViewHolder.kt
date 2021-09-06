@@ -8,7 +8,7 @@ import com.example.bookbook_master.databinding.ItemSearchTypeBookBinding
 import com.example.bookbook_master.model.data.Document
 
 /**
- * 이미지 타입 도서 뷰홀더 (사실상 둘 다 똑같음)
+ * 도서 검색 타입 도서 뷰홀더
  * @author philippe
  */
 class BookSearchTypeViewHolder(private val binding: ItemSearchTypeBookBinding) : RecyclerView.ViewHolder(binding.root) {

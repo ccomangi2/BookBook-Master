@@ -8,7 +8,7 @@ import com.example.bookbook_master.databinding.ItemRecentTypeBookBinding
 import com.example.bookbook_master.model.roomDB.entity.Recent
 
 /**
- * 이미지 타입 도서 뷰홀더 (사실상 둘 다 똑같음)
+ * 최근 본 상품 타입 도서 뷰홀더
  * @author philippe
  */
 class BookRecentTypeViewHolder(private val binding: ItemRecentTypeBookBinding) : RecyclerView.ViewHolder(binding.root) {

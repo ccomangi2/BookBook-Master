@@ -9,7 +9,7 @@ import com.example.bookbook_master.databinding.ItemWishTypeBookBinding
 import com.example.bookbook_master.model.roomDB.entity.Wish
 
 /**
- * 텍스트 타입 도서 뷰홀더 (사실상 둘 다 똑같음)
+ * 위시리스트 타입 도서 뷰홀더
  * @author philippe
  */
 class BookWishTypeViewHolder(private val binding: ItemWishTypeBookBinding) : RecyclerView.ViewHolder(binding.root) {
